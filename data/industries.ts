@@ -1,49 +1,40 @@
 import { Industry } from "../types";
 
-export const INDUSTRIES: Industry[] = [
+export const INDUSTRIES = [
   {
-    id: "ind-fmcg",
+    id: "fmcg",
     title: "FMCG & Consumer Goods",
-    slug: "fmcg",
     description: "Industrial infrastructure for FMCG and consumer product companies.",
     iconName: "Package",
-    image: "/images/industries/fmcg.jpg",
-    categoryMapping: "Industrial"
+    image: "/industries/fmcg.jpg",
   },
   {
-    id: "ind-automobile",
+    id: "automobile",
     title: "Automobile & Auto Ancillaries",
-    slug: "automobile",
     description: "Manufacturing and R&D facilities for automotive companies.",
-    iconName: "Car",
-    image: "/images/industries/automobile.jpg",
-    categoryMapping: "Institutional"
+    iconName: "Settings",
+    image: "/industries/automobile.jpg",
   },
   {
-    id: "ind-machine-spm",
+    id: "machine",
     title: "Machine & SPM",
-    slug: "machine-spm",
     description: "Heavy engineering, machine tooling, and SPM infrastructure projects.",
-    iconName: "Cog",
-    image: "/images/industries/machine-spm.jpg",
-    categoryMapping: "Infrastructure"
+    iconName: "Truck",
+    image: "/industries/machine-spm.jpg",
   },
   {
-    id: "ind-public",
+    id: "public",
     title: "Public & Government",
-    slug: "public-government",
     description: "Government, public sector, and infrastructure development projects.",
-    iconName: "Landmark",
-    image: "/images/industries/public.jpg",
-    categoryMapping: "Infrastructure"
+    iconName: "HardHat",
+    image: "/industries/public-government.jpg",
   },
   {
-    id: "ind-retail",
+    id: "retail",
     title: "Retail & CSR",
-    slug: "retail",
     description: "Retail developments and CSR-led public amenities.",
-    iconName: "ShoppingBag",
-    image: "/images/industries/retail.jpg",
-    categoryMapping: "Public Amenities"
-  }
+    iconName: "ShoppingCart",
+    image: "/industries/retail-csr.jpg",
+  },
 ];
+
