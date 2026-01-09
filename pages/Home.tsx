@@ -71,6 +71,8 @@ const Home: React.FC = () => {
       {/* ABOUT SUMMARY */}
       <section className="py-24 md:py-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-center">
+          
+          {/* TEXT */}
           <div className="order-2 lg:order-1">
             <div className="text-blue-900 font-bold tracking-[0.5em] uppercase text-[10px] mb-6">Established 2011</div>
             <h2 className="text-4xl md:text-7xl font-bold text-gray-900 mb-8 leading-tight uppercase tracking-tighter">
@@ -93,29 +95,40 @@ const Home: React.FC = () => {
             </div>
           </div>
 
+          {/* IMAGE */}
           <div className="relative order-1 lg:order-2">
             <div className="aspect-[4/5] overflow-hidden shadow-2xl border-8 border-white bg-gray-100">
               <img 
-                src="https://images.unsplash.com/photo-1541888946425-d81bb19480c5?auto=format&fit=crop&q=80&w=1200" 
-                alt="Industrial Site" 
+                src="/images/about/precison.jpg"
+                alt="Precision Construction"
                 className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
               />
             </div>
+
+            {/* QUOTE BOX */}
             <div className="absolute -bottom-12 -right-12 bg-blue-900 p-12 shadow-2xl max-w-sm hidden sm:block">
-              <p className="text-white italic text-xl leading-relaxed mb-4 font-light">"Precision is our fundamental currency."</p>
-              <div className="font-bold text-blue-300 uppercase text-[10px] tracking-[0.4em]">— C. Krishna Kumar</div>
+              <p className="text-white italic text-xl leading-relaxed mb-4 font-light">
+                "Precision is our fundamental currency."
+              </p>
+              <div className="font-bold text-blue-300 uppercase text-[10px] tracking-[0.4em]">
+                — C. Krishna Kumar
+              </div>
             </div>
           </div>
+
         </div>
       </section>
 
-      {/* INDUSTRIES (VERTICAL FILTER FIXED) */}
+      {/* INDUSTRIES */}
       <section className="py-24 md:py-32 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
           <div className="mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between">
             <div>
               <h2 className="text-[10px] font-bold text-blue-900 uppercase tracking-[0.5em] mb-4">Operational Sectors</h2>
-              <h3 className="text-3xl md:text-6xl font-bold text-gray-900 uppercase tracking-tighter leading-none">Specialized Verticals</h3>
+              <h3 className="text-3xl md:text-6xl font-bold text-gray-900 uppercase tracking-tighter leading-none">
+                Specialized Verticals
+              </h3>
             </div>
             <p className="text-gray-500 max-w-sm mt-4 md:mt-0 text-sm font-light">
               Select a sector below to explore verified constructed assets.
@@ -130,6 +143,7 @@ const Home: React.FC = () => {
                 className="group relative bg-white p-8 md:p-12 hover:bg-blue-900 transition-all duration-500 overflow-hidden border-b border-gray-100 md:border-r block"
               >
                 <div className="relative z-10">
+
                   <div className="flex justify-between items-start mb-8">
                     <div className="w-16 h-16 bg-blue-50 text-blue-900 flex items-center justify-center group-hover:bg-white transition-all rounded-sm">
                       {getIcon(industry.iconName)}
@@ -142,6 +156,7 @@ const Home: React.FC = () => {
                   <h4 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 group-hover:text-white transition-colors uppercase tracking-tight">
                     {industry.title}
                   </h4>
+
                   <p className="text-gray-500 font-light text-xs md:text-sm mb-8 group-hover:text-blue-100 transition-colors">
                     {industry.description}
                   </p>
@@ -158,20 +173,25 @@ const Home: React.FC = () => {
                       </span>
                     </div>
                   </div>
+
                 </div>
               </Link>
             ))}
           </div>
+
         </div>
       </section>
 
       {/* FEATURED PROJECTS */}
       <section className="py-24 md:py-32 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24">
             <div>
               <div className="text-blue-900 font-bold tracking-[0.5em] uppercase text-[10px] mb-4">The Archive</div>
-              <h2 className="text-3xl md:text-6xl font-bold text-gray-900 uppercase tracking-tighter">Portfolio Highlights</h2>
+              <h2 className="text-3xl md:text-6xl font-bold text-gray-900 uppercase tracking-tighter">
+                Portfolio Highlights
+              </h2>
             </div>
             <Link to="/projects" className="mt-6 md:mt-0 bg-blue-900 text-white px-10 py-5 text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-xl">
               View All Assets
@@ -183,6 +203,7 @@ const Home: React.FC = () => {
               <ProjectCard key={project.id} project={project} />
             ))}
           </div>
+
         </div>
       </section>
 
