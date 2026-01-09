@@ -5,15 +5,17 @@ interface HeroProps {
   slides: any[];
 }
 
-const AUTO_DELAY = 6000; // 6 seconds
+const AUTO_DELAY = 6000;
+const SWIPE_THRESHOLD = 60; // px
 
 const Hero: React.FC<HeroProps> = ({ slides }) => {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
 
   const timerRef = useRef<number | null>(null);
+  const touchStartX = useRef<number | null>(null);
 
-  // ---------------- AUTO SLIDE ----------------
+  // ---------- AUTO SLIDE ----------
   useEffect(() => {
     if (paused || slides.length <= 1) return;
 
@@ -26,10 +28,35 @@ const Hero: React.FC<HeroProps> = ({ slides }) => {
     };
   }, [index, paused, slides.length]);
 
-  // ---------------- MANUAL DOT ----------------
+  // ---------- MANUAL DOT ----------
   const goTo = (i: number) => {
     if (timerRef.current) window.clearTimeout(timerRef.current);
     setIndex(i);
+  };
+
+  // ---------- SWIPE ----------
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+
+    if (Math.abs(diff) > SWIPE_THRESHOLD) {
+      if (diff > 0) {
+        // swipe left → next
+        setIndex((prev) => (prev + 1) % slides.length);
+      } else {
+        // swipe right → prev
+        setIndex((prev) =>
+          prev === 0 ? slides.length - 1 : prev - 1
+        );
+      }
+    }
+
+    touchStartX.current = null;
   };
 
   if (!slides.length) return null;
@@ -37,8 +64,11 @@ const Hero: React.FC<HeroProps> = ({ slides }) => {
   const slide = slides[index];
 
   return (
-    <section className="relative h-[75vh] sm:h-[85vh] md:h-screen overflow-hidden">
-
+    <section
+      className="relative h-[75vh] sm:h-[85vh] md:h-screen overflow-hidden"
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
       {/* IMAGE */}
       <img
         src={slide.heroImage}
@@ -46,7 +76,7 @@ const Hero: React.FC<HeroProps> = ({ slides }) => {
         className="absolute inset-0 w-full h-full object-cover"
       />
 
-      {/* DARK GRADIENT FOR TEXT */}
+      {/* DARK GRADIENT */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 
       {/* CONTENT */}
@@ -88,7 +118,7 @@ const Hero: React.FC<HeroProps> = ({ slides }) => {
         </div>
       </div>
 
-      {/* DOTS — PAUSE ONLY WHEN TOUCHING DOTS */}
+      {/* DOTS (PAUSE ONLY HERE) */}
       <div
         className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-3 z-20"
         onMouseEnter={() => setPaused(true)}
@@ -107,7 +137,6 @@ const Hero: React.FC<HeroProps> = ({ slides }) => {
           />
         ))}
       </div>
-
     </section>
   );
 };
