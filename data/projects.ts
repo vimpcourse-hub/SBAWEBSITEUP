@@ -18,6 +18,7 @@ export const PROJECTS: Project[] = [
     location: { city: "Hindupur", state: "Andhra Pradesh", country: "India" },
     projectValue: { amount: 600, currency: "INR", unit: "Lakhs" },
     timeline: { start: "2023", end: "2024", status: "Completed" },
+    // Verified Path: berger-barrel-scrap-yard
     heroImage: "/images/projects/berger-barrel-scrap-yard/hero.jpg",
     gallery: [
       "/images/projects/berger-barrel-scrap-yard/1.jpg",
@@ -45,6 +46,7 @@ export const PROJECTS: Project[] = [
     location: { city: "Hindupur", state: "Andhra Pradesh", country: "India" },
     projectValue: { amount: 140, currency: "INR", unit: "Lakhs" },
     timeline: { start: "2022", end: "2023", status: "Completed" },
+    // Verified Path: british-paints-manufacturing-unit-gollapuram-hindupur
     heroImage: "/images/projects/british-paints-manufacturing-unit-gollapuram-hindupur/hero.jpg",
     gallery: [
       "/images/projects/british-paints-manufacturing-unit-gollapuram-hindupur/1.jpg",
@@ -74,11 +76,16 @@ export const PROJECTS: Project[] = [
     location: { city: "Puttaparthi", state: "Andhra Pradesh", country: "India" },
     projectValue: { amount: 0, currency: "INR", unit: "CSR" },
     timeline: { start: "2021", end: "2022", status: "Completed" },
+    // Verified Path: sri-sathya-sai-park-work-supported-by-joyalukkas-foundation-at-puttaparthi
     heroImage: "/images/projects/sri-sathya-sai-park-work-supported-by-joyalukkas-foundation-at-puttaparthi/hero.jpg",
     gallery: [
       "/images/projects/sri-sathya-sai-park-work-supported-by-joyalukkas-foundation-at-puttaparthi/1.jpg",
       "/images/projects/sri-sathya-sai-park-work-supported-by-joyalukkas-foundation-at-puttaparthi/2.jpg",
-      "/images/projects/sri-sathya-sai-park-work-supported-by-joyalukkas-foundation-at-puttaparthi/3.jpg"
+      "/images/projects/sri-sathya-sai-park-work-supported-by-joyalukkas-foundation-at-puttaparthi/3.jpg",
+      "/images/projects/sri-sathya-sai-park-work-supported-by-joyalukkas-foundation-at-puttaparthi/4.jpg",
+      "/images/projects/sri-sathya-sai-park-work-supported-by-joyalukkas-foundation-at-puttaparthi/5.jpg",
+      "/images/projects/sri-sathya-sai-park-work-supported-by-joyalukkas-foundation-at-puttaparthi/6.jpg",
+      "/images/projects/sri-sathya-sai-park-work-supported-by-joyalukkas-foundation-at-puttaparthi/7.jpg"
     ],
     scopeOfWork: ["Landscaping", "Civil Walkways", "Public Utilities"],
     description: "Public park development project supported by Joyalukkas Foundation at Puttaparthi.",
@@ -102,6 +109,7 @@ export const PROJECTS: Project[] = [
     location: { city: "Hindupur", state: "Andhra Pradesh", country: "India" },
     projectValue: { amount: 0, currency: "INR", unit: "Lakhs" },
     timeline: { start: "2023", end: "2023", status: "Completed" },
+    // Verified Path: berger-rms-canopy
     heroImage: "/images/projects/berger-rms-canopy/hero.jpg",
     gallery: [],
     scopeOfWork: ["Steel Canopy Structure", "Fabrication"],
@@ -126,7 +134,8 @@ export const PROJECTS: Project[] = [
     location: { city: "Hindupur", state: "Andhra Pradesh", country: "India" },
     projectValue: { amount: 300, currency: "INR", unit: "Lakhs" },
     timeline: { start: "2022", end: "2023", status: "Completed" },
-    heroImage: "/images/projects/project-placeholder.jpg",
+    // Verified Path: sewage-treatment-plant
+    heroImage: "/images/projects/sewage-treatment-plant/hero.jpg",
     gallery: [],
     scopeOfWork: ["STP Installation", "Civil Works"],
     description: "Construction of ECO STP at Berger Paints Limited.",
@@ -524,7 +533,7 @@ export const PROJECTS: Project[] = [
     displayOnHomeHero: false
   },
 
-  // 22. Canteen & Expansion Sheds – Wipro
+  // 22. Canteen & Expansion Sheds – Wipro (Mapped to CSR Food Court images as closest fit)
   {
     id: "proj-legacy-wipro-canteen",
     slug: "canteen-expansion-sheds-wipro",
@@ -540,11 +549,14 @@ export const PROJECTS: Project[] = [
     location: { city: "Hindupur", state: "Andhra Pradesh", country: "India" },
     projectValue: { amount: 150, currency: "INR", unit: "Lakhs" },
     timeline: { start: "2020", end: "2021", status: "Completed" },
-    heroImage: "/images/projects/project-placeholder.jpg",
-    gallery: [],
+    // Verified Path: berger-csr-food-court (Using these images as they are the only "Canteen/Food" related ones available)
+    heroImage: "/images/projects/berger-csr-food-court/hero.jpg",
+    gallery: [
+      "/images/projects/berger-csr-food-court/1.jpg"
+    ],
     scopeOfWork: ["Building Construction", "Shed Expansion"],
     description: "Construction of Canteen Buildings and Expansion Sheds for Wipro Infrastructure.",
-    isFeatured: false,
+    isFeatured: true,
     displayOnHomeHero: false
   },
 
@@ -620,7 +632,7 @@ export const PROJECTS: Project[] = [
     displayOnHomeHero: false
   },
 
-  // 26. State Highway – Yelburga to Cocoonor (NEW ADDITION)
+  // 26. State Highway – Yelburga to Cocoonor
   {
     id: "proj-state-highway-koppal",
     slug: "state-highway-yelburga-cocoonor",
