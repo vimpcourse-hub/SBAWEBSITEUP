@@ -3,52 +3,56 @@ import { ENTITIES } from "../data/entities";
 import { Link } from "react-router-dom";
 
 const PartnerCarousel: React.FC = () => {
+  const items = ENTITIES.filter(e => e.type === "partner");
 
-  const partners = ENTITIES.filter(e => e.type === "partner");
+  if (!items.length) return null;
 
   return (
-    <div className="py-20 bg-gray-50 border-y border-gray-100 overflow-hidden">
+    <div className="py-24 bg-white border-t border-gray-100 overflow-hidden">
 
-      <div className="max-w-7xl mx-auto px-6 mb-10 text-center">
-        <h2 className="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500 mb-3">
-          Strategic Alliances & JV Partners
-        </h2>
-        <div className="h-[2px] w-16 bg-blue-900/30 mx-auto"></div>
+      {/* TITLE */}
+      <div className="max-w-7xl mx-auto px-6 mb-14 flex flex-col md:flex-row md:items-end justify-between">
+        <div>
+          <h2 className="text-xs font-bold text-blue-900 uppercase tracking-[0.3em] mb-4">
+            Strategic Partners
+          </h2>
+          <h3 className="text-4xl font-bold text-gray-900 uppercase tracking-tighter">
+            Engineering Alliances
+          </h3>
+        </div>
+        <p className="text-gray-500 text-sm max-w-md mt-4 md:mt-0 font-light">
+          Trusted collaborators across engineering, procurement and execution.
+        </p>
       </div>
 
+      {/* SLIDER */}
       <div className="flex overflow-hidden relative">
-        <div className="flex animate-scroll-partners whitespace-nowrap py-4">
+        <div className="flex animate-scroll-partners whitespace-nowrap py-6">
 
-          {[...partners, ...partners].map((partner, i) => (
+          {[...items, ...items].map((entity, i) => (
             <Link
               key={i}
-              to={`/projects?entity=${encodeURIComponent(partner.name)}`}
-              className="mx-14 flex flex-col items-center justify-center w-48 text-center hover:scale-105 transition-transform"
+              to="/partnerships"
+              className="mx-4 w-[260px] h-36 flex items-center justify-center bg-gray-50 border border-gray-100 hover:border-blue-900 hover:bg-white transition-all duration-500 shadow-sm hover:shadow-xl px-6"
             >
-
-              {partner.file ? (
-                <>
-                  <img
-                    src={`/images/entities/${partner.file}`}
-                    alt={partner.name}
-                    className="max-h-10 object-contain mb-3"
-                  />
-                  <span className="text-[9px] font-bold uppercase tracking-widest text-gray-400">
-                    {partner.name}
-                  </span>
-                </>
+              {entity.isTextOnly ? (
+                <span className="text-sm font-bold text-gray-900 uppercase text-center">
+                  {entity.name}
+                </span>
               ) : (
-                <div className="text-xs font-bold uppercase tracking-widest text-gray-600">
-                  {partner.name}
-                </div>
+                <img
+                  src={`/images/entities/${entity.file}`}
+                  alt={entity.name}
+                  className="max-h-14 object-contain"
+                />
               )}
-
             </Link>
           ))}
 
         </div>
       </div>
 
+      {/* ANIMATION */}
       <style>{`
         @keyframes scroll-partners {
           0% { transform: translateX(0); }
@@ -61,6 +65,7 @@ const PartnerCarousel: React.FC = () => {
           animation-play-state: paused;
         }
       `}</style>
+
     </div>
   );
 };
