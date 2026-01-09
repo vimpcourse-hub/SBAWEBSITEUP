@@ -14,9 +14,17 @@ import { Link } from 'react-router-dom';
 
 const Home: React.FC = () => {
 
-  const heroSlides = PROJECTS
-    .filter(p => p.displayOnHomeHero || p.isFeatured)
-    .slice(0, 5);
+const heroSlides = PROJECTS
+  .filter(p =>
+    // ✅ old logic (unchanged)
+    p.displayOnHomeHero ||
+    p.isFeatured ||
+
+    // ✅ new automatic fallback (SAFE)
+    (p.heroImage && p.heroImage.trim() !== "")
+  )
+  .slice(0, 6);
+
 
   const featuredProjects = PROJECTS.filter(p => p.isFeatured).slice(0, 3);
 
