@@ -26,7 +26,7 @@ export const PROJECTS: Project[] = [
     scopeOfWork: ["Yard Development", "Concrete Works", "Drainage"],
     description: "Construction of Scrap and Barrel Yard at Berger Paints Limited, Hindupur.",
     isFeatured: true,
-    displayOnHomeHero: true // ✅ Enabled
+    displayOnHomeHero: true
   },
 
   // 2. British Paints Manufacturing Unit [HERO ENABLED]
@@ -55,7 +55,7 @@ export const PROJECTS: Project[] = [
     scopeOfWork: ["Civil Construction", "Industrial Flooring", "Structural Works"],
     description: "Construction of facilities for British Paints at Hindupur.",
     isFeatured: true,
-    displayOnHomeHero: true // ✅ Enabled
+    displayOnHomeHero: true
   },
 
   // 3. Sri Sathya Sai Public Park (CSR) [HERO ENABLED]
@@ -87,7 +87,7 @@ export const PROJECTS: Project[] = [
     scopeOfWork: ["Landscaping", "Civil Walkways", "Public Utilities"],
     description: "Public park development project supported by Joyalukkas Foundation at Puttaparthi.",
     isFeatured: true,
-    displayOnHomeHero: true // ✅ Enabled
+    displayOnHomeHero: true
   },
 
   // 4. Berger RMS Canopy [HERO ENABLED]
@@ -111,10 +111,37 @@ export const PROJECTS: Project[] = [
     scopeOfWork: ["Steel Canopy Structure", "Fabrication"],
     description: "RMS steel canopy structure developed within Berger industrial premises.",
     isFeatured: false,
-    displayOnHomeHero: true // ✅ Enabled
+    displayOnHomeHero: true
   },
 
-  // 5. ECO STP – Berger [HERO ENABLED]
+  // 5. Berger CSR Food Court - Thumakunta [NEW - HERO ENABLED]
+  {
+    id: "proj-berger-csr-food-court",
+    slug: "berger-csr-food-court-thumakunta",
+    title: "Food Court – Thumakunta Govt High School",
+    vertical: "Retail & CSR",
+    client: {
+      name: "Berger Paints Limited",
+      slug: "berger",
+      logo: "/images/entities/berger.png"
+    },
+    category: { primary: "Public Amenities", secondary: ["CSR", "Institutional"] },
+    tags: ["csr", "school-infra", "food-court"],
+    location: { city: "Thumakunta", state: "Andhra Pradesh", country: "India" },
+    projectValue: { amount: 0, currency: "INR", unit: "CSR" },
+    timeline: { start: "2023", end: "2023", status: "Completed" },
+    // Mapped to folder: berger-csr-food-court
+    heroImage: "/images/projects/berger-csr-food-court/hero.jpg",
+    gallery: [
+      "/images/projects/berger-csr-food-court/1.jpg"
+    ],
+    scopeOfWork: ["Civil Construction", "Roofing", "Finishing"],
+    description: "Berger Paints India Limited CSR Initiative: Construction of Food Court for Thumakunta Government High School.",
+    isFeatured: true,
+    displayOnHomeHero: true
+  },
+
+  // 6. ECO STP – Berger [HERO ENABLED]
   {
     id: "proj-eco-stp-berger",
     slug: "eco-stp-berger-hindupur",
@@ -135,10 +162,10 @@ export const PROJECTS: Project[] = [
     scopeOfWork: ["STP Installation", "Civil Works"],
     description: "Construction of ECO STP at Berger Paints Limited.",
     isFeatured: false,
-    displayOnHomeHero: true // ✅ Enabled
+    displayOnHomeHero: true
   },
 
-  // 6. Rain Water Harvesting – Berger
+  // 7. Rain Water Harvesting – Berger
   {
     id: "proj-rainwater-harvesting-berger",
     slug: "rainwater-harvesting-berger-hindupur",
@@ -162,7 +189,7 @@ export const PROJECTS: Project[] = [
     displayOnHomeHero: false
   },
 
-  // 7. Workshop Sheds – Berger
+  // 8. Workshop Sheds – Berger
   {
     id: "proj-workshop-shed-berger",
     slug: "workshop-sheds-berger-hindupur",
@@ -186,7 +213,7 @@ export const PROJECTS: Project[] = [
     displayOnHomeHero: false
   },
 
-  // 8. R&D Center – Wipro Peenya
+  // 9. R&D Center – Wipro Peenya
   {
     id: "proj-rnd-center-wipro",
     slug: "rnd-center-wipro-peenya",
@@ -210,7 +237,7 @@ export const PROJECTS: Project[] = [
     displayOnHomeHero: false
   },
 
-  // 9. Material Handling Tank Shed – Wipro
+  // 10. Material Handling Tank Shed – Wipro
   {
     id: "proj-material-handling-wipro",
     slug: "material-handling-shed-wipro-hindupur",
@@ -234,7 +261,7 @@ export const PROJECTS: Project[] = [
     displayOnHomeHero: false
   },
 
-  // 10. Govt Tool Room – Gauribidanur
+  // 11. Govt Tool Room – Gauribidanur
   {
     id: "proj-gttc-gauribidanur",
     slug: "govt-tool-room-gauribidanur",
@@ -259,7 +286,7 @@ export const PROJECTS: Project[] = [
     displayOnHomeHero: false
   },
 
-  // 11. Slum Upgradation – Hospet
+  // 12. Slum Upgradation – Hospet
   {
     id: "proj-slum-upgradation-hospet",
     slug: "slum-upgradation-hospet",
@@ -284,7 +311,7 @@ export const PROJECTS: Project[] = [
     displayOnHomeHero: false
   },
 
-  // 12. Slum Upgradation – Chitradurga
+  // 13. Slum Upgradation – Chitradurga
   {
     id: "proj-slum-upgradation-chitradurga",
     slug: "slum-upgradation-chitradurga",
@@ -309,7 +336,7 @@ export const PROJECTS: Project[] = [
     displayOnHomeHero: false
   },
 
-  // 13. Railway Ballast & Track Works
+  // 14. Railway Ballast & Track Works
   {
     id: "proj-legacy-railways",
     slug: "railway-ballast-thornagallu-hospet",
@@ -333,7 +360,7 @@ export const PROJECTS: Project[] = [
     displayOnHomeHero: false
   },
 
-  // 14. Overhead Reservoir – Hindupur
+  // 15. Overhead Reservoir – Hindupur
   {
     id: "proj-legacy-overhead-reservoir",
     slug: "overhead-reservoir-hindupur-constituency",
@@ -357,7 +384,7 @@ export const PROJECTS: Project[] = [
     displayOnHomeHero: false
   },
 
-  // 15. Windmill Ghat Road – Suzlon
+  // 16. Windmill Ghat Road – Suzlon
   {
     id: "proj-legacy-suzlon",
     slug: "windmill-ghat-road-suzlon-gadag",
@@ -381,7 +408,7 @@ export const PROJECTS: Project[] = [
     displayOnHomeHero: false
   },
 
-  // 16. Windmill Ghat Road – Barooka Power
+  // 17. Windmill Ghat Road – Barooka Power
   {
     id: "proj-legacy-barooka",
     slug: "windmill-ghat-road-barooka-power",
@@ -405,7 +432,7 @@ export const PROJECTS: Project[] = [
     displayOnHomeHero: false
   },
 
-  // 17. Badra Canal No.13 – Shivamoga
+  // 18. Badra Canal No.13 – Shivamoga
   {
     id: "proj-legacy-badra-13",
     slug: "badra-canal-no-13-shivamoga",
@@ -430,7 +457,7 @@ export const PROJECTS: Project[] = [
     displayOnHomeHero: false
   },
 
-  // 18. Badra Canal Multiple – Davanagere
+  // 19. Badra Canal Multiple – Davanagere
   {
     id: "proj-legacy-badra-multi",
     slug: "badra-canal-multiple-davanagere",
@@ -455,7 +482,7 @@ export const PROJECTS: Project[] = [
     displayOnHomeHero: false
   },
 
-  // 19. Sri Rama Reddy Drinking Water Project
+  // 20. Sri Rama Reddy Drinking Water Project
   {
     id: "proj-legacy-sri-rama-reddy",
     slug: "drinking-water-sri-rama-reddy-project",
@@ -480,7 +507,7 @@ export const PROJECTS: Project[] = [
     displayOnHomeHero: false
   },
 
-  // 20. Furnace Buildings & Industrial Sheds – MB Smelters
+  // 21. Furnace Buildings & Industrial Sheds – MB Smelters
   {
     id: "proj-legacy-mb-smelters",
     slug: "furnace-slabs-mb-smelters",
@@ -504,7 +531,7 @@ export const PROJECTS: Project[] = [
     displayOnHomeHero: false
   },
 
-  // 21. Compound Wall & Pump Houses – Berger
+  // 22. Compound Wall & Pump Houses – Berger
   {
     id: "proj-legacy-berger-wall",
     slug: "compound-wall-pump-house-berger",
@@ -528,7 +555,7 @@ export const PROJECTS: Project[] = [
     displayOnHomeHero: false
   },
 
-  // 22. Canteen & Expansion Sheds – Wipro [HERO ENABLED]
+  // 23. Canteen & Expansion Sheds – Wipro [UPDATED: Placeholder Image]
   {
     id: "proj-legacy-wipro-canteen",
     slug: "canteen-expansion-sheds-wipro",
@@ -544,17 +571,15 @@ export const PROJECTS: Project[] = [
     location: { city: "Hindupur", state: "Andhra Pradesh", country: "India" },
     projectValue: { amount: 150, currency: "INR", unit: "Lakhs" },
     timeline: { start: "2020", end: "2021", status: "Completed" },
-    heroImage: "/images/projects/berger-csr-food-court/hero.jpg",
-    gallery: [
-      "/images/projects/berger-csr-food-court/1.jpg"
-    ],
+    heroImage: "/images/projects/project-placeholder.jpg", // Corrected
+    gallery: [],
     scopeOfWork: ["Building Construction", "Shed Expansion"],
     description: "Construction of Canteen Buildings and Expansion Sheds for Wipro Infrastructure.",
-    isFeatured: true, // User override based on images found
-    displayOnHomeHero: true // ✅ Enabled
+    isFeatured: false, // Updated status
+    displayOnHomeHero: false
   },
 
-  // 23. KIADB Industrial Estate Roads – Gauribidanur
+  // 24. KIADB Industrial Estate Roads – Gauribidanur
   {
     id: "proj-kiadb-gauribidanur",
     slug: "kiadb-industrial-estate-gauribidanur",
@@ -578,7 +603,7 @@ export const PROJECTS: Project[] = [
     displayOnHomeHero: false
   },
 
-  // 24. Furnace Construction – Tirupati Steels
+  // 25. Furnace Construction – Tirupati Steels
   {
     id: "proj-legacy-tirupati-steels",
     slug: "furnace-tirupati-steels",
@@ -602,7 +627,7 @@ export const PROJECTS: Project[] = [
     displayOnHomeHero: false
   },
 
-  // 25. KIADB Industrial Estate – Narasapur
+  // 26. KIADB Industrial Estate – Narasapur
   {
     id: "proj-kiadb-narasapur",
     slug: "kiadb-industrial-estate-narasapur",
@@ -626,7 +651,7 @@ export const PROJECTS: Project[] = [
     displayOnHomeHero: false
   },
 
-  // 26. State Highway – Yelburga to Cocoonor
+  // 27. State Highway – Yelburga to Cocoonor
   {
     id: "proj-state-highway-koppal",
     slug: "state-highway-yelburga-cocoonor",
