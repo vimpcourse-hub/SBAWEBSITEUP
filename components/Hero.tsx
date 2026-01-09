@@ -37,26 +37,7 @@ const Hero: React.FC<HeroProps> = ({ slides }) => {
   const slide = slides[index];
 
   return (
-<section className="relative h-[75vh] sm:h-[85vh] md:h-screen overflow-hidden">
-  {/* DOTS */}
-<div
-  className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-3 z-20"
-  onMouseEnter={() => setPaused(true)}
-  onMouseLeave={() => setPaused(false)}
-  onTouchStart={() => setPaused(true)}
-  onTouchEnd={() => setPaused(false)}
->
-  {slides.map((_, i) => (
-    <button
-      key={i}
-      onClick={() => goTo(i)}
-      className={`w-2.5 h-2.5 rounded-full transition-all ${
-        i === index ? "bg-white scale-125" : "bg-white/50"
-      }`}
-      aria-label={`Slide ${i + 1}`}
-    />
-  ))}
-</div>
+    <section className="relative h-[75vh] sm:h-[85vh] md:h-screen overflow-hidden">
 
       {/* IMAGE */}
       <img
@@ -65,13 +46,12 @@ const Hero: React.FC<HeroProps> = ({ slides }) => {
         className="absolute inset-0 w-full h-full object-cover"
       />
 
-      {/* DARK BOTTOM GRADIENT (ONLY FOR TEXT VISIBILITY) */}
+      {/* DARK GRADIENT FOR TEXT */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 
       {/* CONTENT */}
       <div className="absolute inset-0 flex items-end md:items-center z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full pb-10 md:pb-0">
-
           <div className="max-w-full sm:max-w-xl md:max-w-3xl text-white">
 
             {slide.vertical && (
@@ -108,8 +88,14 @@ const Hero: React.FC<HeroProps> = ({ slides }) => {
         </div>
       </div>
 
-      {/* DOTS */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-3 z-20">
+      {/* DOTS — PAUSE ONLY WHEN TOUCHING DOTS */}
+      <div
+        className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-3 z-20"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onTouchStart={() => setPaused(true)}
+        onTouchEnd={() => setPaused(false)}
+      >
         {slides.map((_, i) => (
           <button
             key={i}
@@ -121,6 +107,7 @@ const Hero: React.FC<HeroProps> = ({ slides }) => {
           />
         ))}
       </div>
+
     </section>
   );
 };
