@@ -2,7 +2,7 @@ import { Project } from "../types";
 
 export const PROJECTS: Project[] = [
   
-  // 1. Berger Scrap & Barrel Yard
+  // 1. Berger Scrap & Barrel Yard [HERO ENABLED]
   {
     id: "proj-berger-scrap-yard",
     slug: "berger-scrap-barrel-yard-hindupur",
@@ -18,7 +18,6 @@ export const PROJECTS: Project[] = [
     location: { city: "Hindupur", state: "Andhra Pradesh", country: "India" },
     projectValue: { amount: 600, currency: "INR", unit: "Lakhs" },
     timeline: { start: "2023", end: "2024", status: "Completed" },
-    // Verified Path: berger-barrel-scrap-yard
     heroImage: "/images/projects/berger-barrel-scrap-yard/hero.jpg",
     gallery: [
       "/images/projects/berger-barrel-scrap-yard/1.jpg",
@@ -27,10 +26,10 @@ export const PROJECTS: Project[] = [
     scopeOfWork: ["Yard Development", "Concrete Works", "Drainage"],
     description: "Construction of Scrap and Barrel Yard at Berger Paints Limited, Hindupur.",
     isFeatured: true,
-    displayOnHomeHero: true
+    displayOnHomeHero: true // ✅ Enabled
   },
 
-  // 2. British Paints Manufacturing Unit
+  // 2. British Paints Manufacturing Unit [HERO ENABLED]
   {
     id: "proj-british-paints-unit",
     slug: "british-paints-manufacturing-unit-hindupur",
@@ -46,7 +45,6 @@ export const PROJECTS: Project[] = [
     location: { city: "Hindupur", state: "Andhra Pradesh", country: "India" },
     projectValue: { amount: 140, currency: "INR", unit: "Lakhs" },
     timeline: { start: "2022", end: "2023", status: "Completed" },
-    // Verified Path: british-paints-manufacturing-unit-gollapuram-hindupur
     heroImage: "/images/projects/british-paints-manufacturing-unit-gollapuram-hindupur/hero.jpg",
     gallery: [
       "/images/projects/british-paints-manufacturing-unit-gollapuram-hindupur/1.jpg",
@@ -57,10 +55,10 @@ export const PROJECTS: Project[] = [
     scopeOfWork: ["Civil Construction", "Industrial Flooring", "Structural Works"],
     description: "Construction of facilities for British Paints at Hindupur.",
     isFeatured: true,
-    displayOnHomeHero: false
+    displayOnHomeHero: true // ✅ Enabled
   },
 
-  // 3. Sri Sathya Sai Public Park (CSR)
+  // 3. Sri Sathya Sai Public Park (CSR) [HERO ENABLED]
   {
     id: "proj-sathya-sai-park",
     slug: "sri-sathya-sai-public-park-puttaparthi",
@@ -76,7 +74,6 @@ export const PROJECTS: Project[] = [
     location: { city: "Puttaparthi", state: "Andhra Pradesh", country: "India" },
     projectValue: { amount: 0, currency: "INR", unit: "CSR" },
     timeline: { start: "2021", end: "2022", status: "Completed" },
-    // Verified Path: sri-sathya-sai-park-work-supported-by-joyalukkas-foundation-at-puttaparthi
     heroImage: "/images/projects/sri-sathya-sai-park-work-supported-by-joyalukkas-foundation-at-puttaparthi/hero.jpg",
     gallery: [
       "/images/projects/sri-sathya-sai-park-work-supported-by-joyalukkas-foundation-at-puttaparthi/1.jpg",
@@ -90,10 +87,10 @@ export const PROJECTS: Project[] = [
     scopeOfWork: ["Landscaping", "Civil Walkways", "Public Utilities"],
     description: "Public park development project supported by Joyalukkas Foundation at Puttaparthi.",
     isFeatured: true,
-    displayOnHomeHero: false
+    displayOnHomeHero: true // ✅ Enabled
   },
 
-  // 4. Berger RMS Canopy
+  // 4. Berger RMS Canopy [HERO ENABLED]
   {
     id: "proj-berger-rms-canopy",
     slug: "berger-rms-canopy",
@@ -109,16 +106,15 @@ export const PROJECTS: Project[] = [
     location: { city: "Hindupur", state: "Andhra Pradesh", country: "India" },
     projectValue: { amount: 0, currency: "INR", unit: "Lakhs" },
     timeline: { start: "2023", end: "2023", status: "Completed" },
-    // Verified Path: berger-rms-canopy
     heroImage: "/images/projects/berger-rms-canopy/hero.jpg",
     gallery: [],
     scopeOfWork: ["Steel Canopy Structure", "Fabrication"],
     description: "RMS steel canopy structure developed within Berger industrial premises.",
     isFeatured: false,
-    displayOnHomeHero: false
+    displayOnHomeHero: true // ✅ Enabled
   },
 
-  // 5. ECO STP – Berger
+  // 5. ECO STP – Berger [HERO ENABLED]
   {
     id: "proj-eco-stp-berger",
     slug: "eco-stp-berger-hindupur",
@@ -134,13 +130,12 @@ export const PROJECTS: Project[] = [
     location: { city: "Hindupur", state: "Andhra Pradesh", country: "India" },
     projectValue: { amount: 300, currency: "INR", unit: "Lakhs" },
     timeline: { start: "2022", end: "2023", status: "Completed" },
-    // Verified Path: sewage-treatment-plant
     heroImage: "/images/projects/sewage-treatment-plant/hero.jpg",
     gallery: [],
     scopeOfWork: ["STP Installation", "Civil Works"],
     description: "Construction of ECO STP at Berger Paints Limited.",
     isFeatured: false,
-    displayOnHomeHero: false
+    displayOnHomeHero: true // ✅ Enabled
   },
 
   // 6. Rain Water Harvesting – Berger
@@ -239,7 +234,7 @@ export const PROJECTS: Project[] = [
     displayOnHomeHero: false
   },
 
-  // 10. Govt Tool Room – Gauribidanur (JV NSL)
+  // 10. Govt Tool Room – Gauribidanur
   {
     id: "proj-gttc-gauribidanur",
     slug: "govt-tool-room-gauribidanur",
@@ -460,7 +455,7 @@ export const PROJECTS: Project[] = [
     displayOnHomeHero: false
   },
 
-  // 19. Sri Rama Reddy Drinking Water Project (L&T)
+  // 19. Sri Rama Reddy Drinking Water Project
   {
     id: "proj-legacy-sri-rama-reddy",
     slug: "drinking-water-sri-rama-reddy-project",
@@ -533,7 +528,7 @@ export const PROJECTS: Project[] = [
     displayOnHomeHero: false
   },
 
-  // 22. Canteen & Expansion Sheds – Wipro (Mapped to CSR Food Court images as closest fit)
+  // 22. Canteen & Expansion Sheds – Wipro [HERO ENABLED]
   {
     id: "proj-legacy-wipro-canteen",
     slug: "canteen-expansion-sheds-wipro",
@@ -549,15 +544,14 @@ export const PROJECTS: Project[] = [
     location: { city: "Hindupur", state: "Andhra Pradesh", country: "India" },
     projectValue: { amount: 150, currency: "INR", unit: "Lakhs" },
     timeline: { start: "2020", end: "2021", status: "Completed" },
-    // Verified Path: berger-csr-food-court (Using these images as they are the only "Canteen/Food" related ones available)
     heroImage: "/images/projects/berger-csr-food-court/hero.jpg",
     gallery: [
       "/images/projects/berger-csr-food-court/1.jpg"
     ],
     scopeOfWork: ["Building Construction", "Shed Expansion"],
     description: "Construction of Canteen Buildings and Expansion Sheds for Wipro Infrastructure.",
-    isFeatured: true,
-    displayOnHomeHero: false
+    isFeatured: true, // User override based on images found
+    displayOnHomeHero: true // ✅ Enabled
   },
 
   // 23. KIADB Industrial Estate Roads – Gauribidanur
