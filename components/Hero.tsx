@@ -37,13 +37,27 @@ const Hero: React.FC<HeroProps> = ({ slides }) => {
   const slide = slides[index];
 
   return (
-    <section
-      className="relative h-[75vh] sm:h-[85vh] md:h-screen overflow-hidden"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onTouchStart={() => setPaused(true)}
-      onTouchEnd={() => setPaused(false)}
-    >
+<section className="relative h-[75vh] sm:h-[85vh] md:h-screen overflow-hidden">
+  {/* DOTS */}
+<div
+  className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-3 z-20"
+  onMouseEnter={() => setPaused(true)}
+  onMouseLeave={() => setPaused(false)}
+  onTouchStart={() => setPaused(true)}
+  onTouchEnd={() => setPaused(false)}
+>
+  {slides.map((_, i) => (
+    <button
+      key={i}
+      onClick={() => goTo(i)}
+      className={`w-2.5 h-2.5 rounded-full transition-all ${
+        i === index ? "bg-white scale-125" : "bg-white/50"
+      }`}
+      aria-label={`Slide ${i + 1}`}
+    />
+  ))}
+</div>
+
       {/* IMAGE */}
       <img
         src={slide.heroImage}
