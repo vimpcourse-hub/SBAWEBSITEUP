@@ -22,7 +22,7 @@ const Projects: React.FC = () => {
 
   /* ---------- URL FILTERS ---------- */
   const urlVertical = query.get("vertical") || "ALL";
-  const urlClient = query.get("entity") || "ALL"; // ✅ FIXED
+  const urlClient = query.get("client") || "ALL";
 
   /* ---------- STATE ---------- */
   const [selectedVertical, setSelectedVertical] = useState(urlVertical);
@@ -55,10 +55,12 @@ const Projects: React.FC = () => {
 
   /* ---------- FILTER LOGIC ---------- */
   const filteredProjects = useMemo(() => {
+    const sv = selectedVertical.toUpperCase();
+    const sc = selectedClient.toLowerCase();
+
     return PROJECTS.filter(p => {
       const matchVertical =
-        selectedVertical === "ALL" ||
-        p.vertical.toUpperCase() === selectedVertical.toUpperCase(); // ✅ FIXED
+        sv === "ALL" || p.vertical.toUpperCase() === sv;
 
       const matchCategory =
         selectedCategory === "ALL" ||
@@ -66,15 +68,16 @@ const Projects: React.FC = () => {
 
       const matchClient =
         selectedClient === "ALL" ||
-        p.client.name === selectedClient ||
-        p.entities?.partners?.includes(selectedClient) ||
-        p.entities?.authorities?.includes(selectedClient) ||
-        p.entities?.clients?.includes(selectedClient);
+        p.client.name.toLowerCase() === sc ||
+        p.entities?.partners?.some(x => x.toLowerCase() === sc) ||
+        p.entities?.authorities?.some(x => x.toLowerCase() === sc) ||
+        p.entities?.clients?.some(x => x.toLowerCase() === sc);
 
       return matchVertical && matchCategory && matchClient;
     });
   }, [selectedVertical, selectedCategory, selectedClient]);
 
+  /* ---------- CLEAR ---------- */
   const clearFilters = () => {
     setSelectedVertical("ALL");
     setSelectedCategory("ALL");
