@@ -98,11 +98,12 @@ const Home: React.FC = () => {
           {/* IMAGE */}
           <div className="relative order-1 lg:order-2">
             <div className="aspect-[4/5] overflow-hidden shadow-2xl border-8 border-white bg-gray-100">
-              <img 
-                src="/images/about/precison.jpg"
-                alt="Precision Construction"
-                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
-              />
+             <img 
+  src="/about/precision.jpg"
+  alt="Precision Construction"
+  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
+/>
+
             </div>
 
             {/* QUOTE BOX */}
