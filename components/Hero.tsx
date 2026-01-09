@@ -1,90 +1,83 @@
-import React, { useState, useEffect } from 'react';
-import { Project } from '../types';
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
-type HeroProps = {
-  slides: Project[];
-};
+interface HeroProps {
+  slides: any[];
+}
+
+const AUTO_DELAY = 6000; // 6 seconds
 
 const Hero: React.FC<HeroProps> = ({ slides }) => {
-  const [current, setCurrent] = useState(0);
+  const [index, setIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
+  // ---------- AUTO SLIDE ----------
   useEffect(() => {
-    if (!slides || slides.length === 0) return;
-    const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % slides.length);
-    }, 6000);
-    return () => clearInterval(timer);
-  }, [slides]);
+    if (isPaused) return;
 
-  if (!slides || slides.length === 0) {
-    return (
-      <section className="h-[70vh] md:h-[90vh] bg-gray-900 flex items-center justify-center text-white">
-        <div className="text-center">
-          <h1 className="text-3xl md:text-5xl font-bold uppercase tracking-tighter mb-4">
-            Sri Balaji Associates
-          </h1>
-          <p className="text-blue-300 uppercase tracking-widest text-xs">
-            Industrial & Infrastructure Contracting
-          </p>
-        </div>
-      </section>
-    );
-  }
+    timerRef.current = setTimeout(() => {
+      setIndex((prev) => (prev + 1) % slides.length);
+    }, AUTO_DELAY);
 
-  const slide = slides[current];
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, [index, isPaused, slides.length]);
+
+  // ---------- MANUAL DOT CLICK ----------
+  const goToSlide = (i: number) => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    setIndex(i);
+  };
+
+  const slide = slides[index];
 
   return (
-    <section className="relative h-[75vh] md:h-[95vh] min-h-[520px] overflow-hidden bg-black">
+    <section
+      className="relative h-[85vh] md:h-screen overflow-hidden"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={() => setIsPaused(true)}
+      onTouchEnd={() => setIsPaused(false)}
+    >
+      {/* IMAGE */}
+      <img
+        src={slide.heroImage}
+        alt={slide.title}
+        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
+      />
 
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        {slide.heroImage ? (
-          <img
-            src={slide.heroImage}
-            alt={slide.title}
-            className="w-full h-full object-cover opacity-60"
-          />
-        ) : (
-          <div className="w-full h-full bg-gray-800" />
-        )}
-      </div>
+      {/* CONTENT */}
+      <div className="absolute inset-0 flex items-end md:items-center pb-12 md:pb-0 z-10">
+        <div className="max-w-7xl mx-auto px-6 w-full">
+          <div className="max-w-full sm:max-w-xl md:max-w-3xl text-white">
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20"></div>
+            {slide.vertical && (
+              <span className="inline-block bg-blue-700 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 mb-4">
+                {slide.vertical}
+              </span>
+            )}
 
-      {/* Content */}
-      <div className="relative z-10 h-full flex items-end pb-28 md:pb-36">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full">
-          <div className="max-w-4xl">
-
-            <div className="inline-block px-4 py-1.5 bg-blue-900 text-white text-[10px] font-bold uppercase tracking-[0.3em] mb-6 shadow-xl">
-              {slide.category?.primary || 'Industrial Project'}
-            </div>
-
-            <h1 className="text-4xl md:text-8xl font-black text-white mb-6 tracking-tighter uppercase leading-[1.05] drop-shadow-2xl break-words">
+            <h1 className="text-3xl sm:text-4xl md:text-7xl lg:text-8xl font-black leading-tight mb-4">
               {slide.title}
             </h1>
 
-            {slide.description && (
-              <p className="text-gray-200 max-w-2xl text-base md:text-xl font-light leading-relaxed mb-10">
-                {slide.description}
-              </p>
-            )}
+            <p className="text-sm sm:text-base md:text-xl opacity-90 mb-8">
+              {slide.subtitle}
+            </p>
 
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <Link
                 to={`/projects/${slide.slug}`}
-                className="inline-flex items-center bg-blue-600 hover:bg-blue-500 text-white px-10 py-5 font-bold uppercase tracking-widest text-[10px] transition-all shadow-xl"
+                className="bg-blue-600 hover:bg-blue-700 transition px-6 py-3 sm:px-10 sm:py-5 text-[10px] sm:text-xs font-bold uppercase tracking-widest"
               >
-                View Project
-                <ArrowRight className="ml-3 w-4 h-4" />
+                View Project →
               </Link>
 
               <Link
                 to="/projects"
-                className="inline-flex items-center border border-white/40 text-white px-10 py-5 font-bold uppercase tracking-widest text-[10px] hover:bg-white/10 transition-all backdrop-blur-md"
+                className="border border-white/50 hover:bg-white/10 transition px-6 py-3 sm:px-10 sm:py-5 text-[10px] sm:text-xs font-bold uppercase tracking-widest"
               >
                 Full Portfolio
               </Link>
@@ -94,27 +87,18 @@ const Hero: React.FC<HeroProps> = ({ slides }) => {
         </div>
       </div>
 
-      {/* Navigation Arrows */}
-      {slides.length > 1 && (
-        <>
+      {/* DOT NAVIGATION */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-20">
+        {slides.map((_, i) => (
           <button
-            onClick={() => setCurrent((current - 1 + slides.length) % slides.length)}
-            className="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 z-20 p-3 bg-white/10 hover:bg-blue-600 text-white backdrop-blur-md border border-white/10 transition-all"
-            aria-label="Previous Slide"
-          >
-            <ChevronLeft size={22} />
-          </button>
-
-          <button
-            onClick={() => setCurrent((current + 1) % slides.length)}
-            className="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 z-20 p-3 bg-white/10 hover:bg-blue-600 text-white backdrop-blur-md border border-white/10 transition-all"
-            aria-label="Next Slide"
-          >
-            <ChevronRight size={22} />
-          </button>
-        </>
-      )}
-
+            key={i}
+            onClick={() => goToSlide(i)}
+            className={`w-3 h-3 rounded-full transition-all ${
+              i === index ? "bg-white scale-125" : "bg-white/50 hover:bg-white"
+            }`}
+          />
+        ))}
+      </div>
     </section>
   );
 };
