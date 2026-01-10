@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 
 const Clients: React.FC = () => {
 
-  // ONLY clients + government authorities
-  const clientsAndAuthorities = ENTITIES.filter(
-    e => e.type === "client" || e.type === "authority"
+  // ✅ Only real clients + authority CHILDREN (exclude govt parents)
+  const clientsAndAuthorities = ENTITIES.filter(e =>
+    (e.type === "client") ||
+    (e.type === "authority" && e.parent)
   );
 
   return (
@@ -37,8 +38,8 @@ const Clients: React.FC = () => {
 
             {clientsAndAuthorities.map(entity => (
               <Link
-                key={entity.name}
-                to={`/projects?group=${encodeURIComponent(entity.group)}`}
+                key={entity.key}
+                to={`/projects?entity=${encodeURIComponent(entity.key)}`}
                 className="
                   group bg-white border border-gray-100
                   hover:border-blue-900 hover:shadow-xl
@@ -55,17 +56,22 @@ const Clients: React.FC = () => {
                     className="max-h-[60px] max-w-[180px] object-contain mb-4"
                   />
                 ) : (
-                  <div className="text-sm font-bold uppercase text-gray-800 mb-4 px-2">
+                  <div className="text-sm font-bold uppercase text-gray-800 mb-4 px-2 leading-tight">
                     {entity.name}
                   </div>
                 )}
 
-                {/* NAME (clean, no repetition) */}
+                {/* NAME */}
                 <div className="text-[11px] font-semibold uppercase tracking-widest text-gray-600 leading-tight text-center px-2">
-                  {entity.name
-                    .replace(/municipal council/i, "Municipal Council")
-                    .replace(/government of/i, "Government of")}
+                  {entity.name}
                 </div>
+
+                {/* SUBTITLE (optional, clean) */}
+                {entity.subtitle && (
+                  <div className="text-[9px] mt-1 uppercase tracking-widest text-gray-400">
+                    {entity.subtitle}
+                  </div>
+                )}
               </Link>
             ))}
 
