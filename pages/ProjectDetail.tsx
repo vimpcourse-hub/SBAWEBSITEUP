@@ -1,19 +1,25 @@
-import React, { useState, useRef } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { PROJECTS } from '../data/projects';
-import { 
-  MapPin, Calendar, Briefcase, TrendingUp, ChevronLeft, ChevronRight
-} from 'lucide-react';
-import ImagePlaceholder from '../components/ImagePlaceholder';
-import { config } from '../config';
+import React, { useState, useRef } from "react";
+import { useParams, Link } from "react-router-dom";
+import { PROJECTS } from "../data/projects";
+import {
+  MapPin,
+  Calendar,
+  Briefcase,
+  TrendingUp,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+import ImagePlaceholder from "../components/ImagePlaceholder";
+import { normalizeSlug } from "../utils/slug";
 
 const ProjectDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
-  const project = PROJECTS.find(p => p.slug === slug);
+
+  const project = PROJECTS.find(
+    p => normalizeSlug(p.slug) === normalizeSlug(slug || "")
+  );
 
   const [galleryIndex, setGalleryIndex] = useState(0);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
   const [zoomImage, setZoomImage] = useState<string | null>(null);
 
   const galleryTouchStart = useRef<number | null>(null);
@@ -38,10 +44,14 @@ const ProjectDetail: React.FC = () => {
   const gallery = project.gallery || [];
 
   const nextGalleryImg = () =>
-    setGalleryIndex((prev) => (prev === gallery.length - 1 ? 0 : prev + 1));
+    setGalleryIndex(prev =>
+      prev === gallery.length - 1 ? 0 : prev + 1
+    );
 
   const prevGalleryImg = () =>
-    setGalleryIndex((prev) => (prev === 0 ? gallery.length - 1 : prev - 1));
+    setGalleryIndex(prev =>
+      prev === 0 ? gallery.length - 1 : prev - 1
+    );
 
   const handleGalleryTouchStart = (e: React.TouchEvent) => {
     galleryTouchStart.current = e.targetTouches[0].clientX;
@@ -63,7 +73,7 @@ const ProjectDetail: React.FC = () => {
   /* CLEAN VALUATION */
   const displayValue =
     project.projectValue.amount > 0
-      ? `₹${project.projectValue.amount} Lakhs`
+      ? `₹${project.projectValue.amount} ${project.projectValue.unit}`
       : "—";
 
   return (
@@ -73,10 +83,10 @@ const ProjectDetail: React.FC = () => {
       <section className="relative h-[65vh] md:h-[85vh] min-h-[550px] bg-black overflow-hidden flex flex-col pt-16 md:pt-24">
         <div className="absolute inset-0">
           {project.heroImage ? (
-            <img 
-              src={project.heroImage} 
-              alt={project.title} 
-              className="w-full h-full object-cover opacity-60" 
+            <img
+              src={project.heroImage}
+              alt={project.title}
+              className="w-full h-full object-cover"
             />
           ) : (
             <ImagePlaceholder title={project.title} />
@@ -113,7 +123,7 @@ const ProjectDetail: React.FC = () => {
               <div className="text-[9px] font-bold text-blue-200 uppercase tracking-widest mb-1 opacity-70">
                 Client
               </div>
-              <div className="font-bold text-xs md:text-base uppercase truncate leading-tight">
+              <div className="font-bold text-xs md:text-base uppercase truncate">
                 {project.client.name}
               </div>
             </div>
@@ -125,7 +135,7 @@ const ProjectDetail: React.FC = () => {
               <div className="text-[9px] font-bold text-blue-200 uppercase tracking-widest mb-1 opacity-70">
                 Location
               </div>
-              <div className="font-bold text-xs md:text-base uppercase leading-tight">
+              <div className="font-bold text-xs md:text-base uppercase">
                 {project.location.city}
               </div>
             </div>
@@ -137,7 +147,7 @@ const ProjectDetail: React.FC = () => {
               <div className="text-[9px] font-bold text-blue-200 uppercase tracking-widest mb-1 opacity-70">
                 Valuation
               </div>
-              <div className="font-bold text-xs md:text-base uppercase leading-tight">
+              <div className="font-bold text-xs md:text-base uppercase">
                 {displayValue}
               </div>
             </div>
@@ -149,7 +159,7 @@ const ProjectDetail: React.FC = () => {
               <div className="text-[9px] font-bold text-blue-200 uppercase tracking-widest mb-1 opacity-70">
                 Status
               </div>
-              <div className="font-bold text-xs md:text-base uppercase leading-tight">
+              <div className="font-bold text-xs md:text-base uppercase">
                 {project.timeline.status}
               </div>
             </div>
@@ -166,7 +176,7 @@ const ProjectDetail: React.FC = () => {
         </p>
 
         {/* TAGS */}
-        {project.tags && project.tags.length > 0 && (
+        {project.tags?.length > 0 && (
           <div className="flex flex-wrap gap-3 mb-16">
             {project.tags.map(tag => (
               <span
@@ -187,7 +197,6 @@ const ProjectDetail: React.FC = () => {
             onTouchMove={handleGalleryTouchMove}
             onTouchEnd={handleGalleryTouchEnd}
           >
-            {/* MAIN IMAGE */}
             <div className="relative h-[420px] bg-black overflow-hidden rounded-lg">
               <img
                 src={gallery[galleryIndex]}
@@ -215,12 +224,11 @@ const ProjectDetail: React.FC = () => {
               )}
             </div>
 
-            {/* THUMBNAILS */}
             {gallery.length > 1 && (
               <div className="mt-4 flex gap-3 overflow-x-auto pb-2">
                 {gallery.map((img, idx) => (
                   <button
-                    key={idx}
+                    key={img}
                     onClick={() => setGalleryIndex(idx)}
                     className={`flex-shrink-0 border-2 transition ${
                       idx === galleryIndex
