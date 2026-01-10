@@ -23,27 +23,37 @@ const Projects: React.FC = () => {
 
   /* ---------- URL PARAMS ---------- */
   const urlVertical = query.get("vertical") || "ALL";
-  const urlGroup = query.get("group") || "ALL";
+  const urlEntity = query.get("entity") || "ALL";
 
   /* ---------- STATE ---------- */
   const [selectedVertical, setSelectedVertical] = useState(urlVertical);
   const [selectedCategory, setSelectedCategory] = useState("ALL");
-  const [selectedGroup, setSelectedGroup] = useState(urlGroup);
-  const [selectedClient, setSelectedClient] = useState("ALL");
+  const [selectedEntity, setSelectedEntity] = useState(urlEntity);
 
   /* ---------- SYNC URL → STATE ---------- */
   useEffect(() => {
     setSelectedVertical(urlVertical);
-    setSelectedGroup(urlGroup);
+    setSelectedEntity(urlEntity);
+  }, [urlVertical, urlEntity]);
 
-    // Reset conflicting filters
-    if (urlGroup !== "ALL") {
-      setSelectedClient("ALL");
+  /* ---------- GOVERNMENT PARENT → CHILD EXPANSION ---------- */
+  const expandedAuthorityKeys = useMemo(() => {
+    if (selectedEntity === "ALL") return [];
+
+    const entity = ENTITIES.find(e => e.key === selectedEntity);
+    if (!entity) return [];
+
+    // If parent govt selected → include all children
+    if (entity.type === "authority" && !entity.parent) {
+      return ENTITIES
+        .filter(e => e.parent === entity.key)
+        .map(e => e.key);
     }
-  }, [urlVertical, urlGroup]);
+
+    return [];
+  }, [selectedEntity]);
 
   /* ---------- DROPDOWNS ---------- */
-
   const allCategories = useMemo(() => {
     const set = new Set<string>();
     PROJECTS.forEach(p =>
@@ -52,8 +62,11 @@ const Projects: React.FC = () => {
     return Array.from(set).sort();
   }, []);
 
-  const allClients = useMemo(() => {
-    return ENTITIES.map(e => e.name).sort();
+  const allEntities = useMemo(() => {
+    return ENTITIES
+      .filter(e => e.type !== "authority" || e.parent) // exclude govt parents
+      .map(e => ({ key: e.key, name: e.name }))
+      .sort((a, b) => a.name.localeCompare(b.name));
   }, []);
 
   /* ---------- FILTER LOGIC ---------- */
@@ -61,42 +74,35 @@ const Projects: React.FC = () => {
     return PROJECTS.filter(p => {
       const matchVertical =
         selectedVertical === "ALL" ||
-        p.vertical.toUpperCase() === selectedVertical.toUpperCase();
+        p.vertical === selectedVertical;
 
       const matchCategory =
         selectedCategory === "ALL" ||
         p.category.primary.toUpperCase() === selectedCategory;
 
-      const matchGroup =
-        selectedGroup === "ALL" ||
-        p.entities?.clients?.includes(selectedGroup) ||
-        p.entities?.partners?.includes(selectedGroup) ||
-        p.entities?.authorities?.includes(selectedGroup);
+      const matchEntity =
+        selectedEntity === "ALL" ||
+        p.entities?.clients?.includes(selectedEntity) ||
+        p.entities?.partners?.includes(selectedEntity) ||
+        p.entities?.authorities?.includes(selectedEntity) ||
+        expandedAuthorityKeys.some(k =>
+          p.entities?.authorities?.includes(k)
+        );
 
-      const matchClient =
-        selectedClient === "ALL" ||
-        p.client.name === selectedClient;
-
-      return (
-        matchVertical &&
-        matchCategory &&
-        matchGroup &&
-        matchClient
-      );
+      return matchVertical && matchCategory && matchEntity;
     });
   }, [
     selectedVertical,
     selectedCategory,
-    selectedGroup,
-    selectedClient
+    selectedEntity,
+    expandedAuthorityKeys
   ]);
 
   /* ---------- CLEAR ---------- */
   const clearFilters = () => {
     setSelectedVertical("ALL");
     setSelectedCategory("ALL");
-    setSelectedGroup("ALL");
-    setSelectedClient("ALL");
+    setSelectedEntity("ALL");
     window.history.replaceState({}, "", "/projects");
   };
 
@@ -129,7 +135,7 @@ const Projects: React.FC = () => {
               value={selectedVertical}
               onChange={e => {
                 setSelectedVertical(e.target.value);
-                setSelectedGroup("ALL");
+                setSelectedEntity("ALL");
               }}
               className="w-full border border-gray-200 px-4 py-3 text-sm bg-white"
             >
@@ -156,22 +162,19 @@ const Projects: React.FC = () => {
             </select>
           </div>
 
-          {/* CLIENT / AUTHORITY / PARTNER */}
+          {/* ENTITY */}
           <div>
             <div className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2">
               Client / Authority / Partner
             </div>
             <select
-              value={selectedClient}
-              onChange={e => {
-                setSelectedClient(e.target.value);
-                setSelectedGroup("ALL");
-              }}
+              value={selectedEntity}
+              onChange={e => setSelectedEntity(e.target.value)}
               className="w-full border border-gray-200 px-4 py-3 text-sm bg-white"
             >
               <option value="ALL">ALL</option>
-              {allClients.map(c => (
-                <option key={c} value={c}>{c}</option>
+              {allEntities.map(e => (
+                <option key={e.key} value={e.key}>{e.name}</option>
               ))}
             </select>
           </div>
