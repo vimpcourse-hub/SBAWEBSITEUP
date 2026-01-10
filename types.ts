@@ -1,3 +1,5 @@
+// types.ts
+
 export interface ProjectClient {
   name: string;
   slug: string;
@@ -27,7 +29,7 @@ export interface ProjectLocation {
   country: string;
 }
 
-/* USED FOR LOGO FILTERING */
+/* FOR LOGO FILTERING */
 export interface ProjectEntities {
   clients?: string[];
   authorities?: string[];
@@ -56,24 +58,21 @@ export interface Project {
   displayOnHomeHero: boolean;
 }
 
-/* LOGO ENTITIES */
+/* LOGO ITEMS */
 export interface EntityItem {
   name: string;
   file?: string;
   type: "client" | "authority" | "partner";
-  group: string;          // USED IN FILTER
+  group: string;
   subtitle?: string;
   isTextOnly?: boolean;
 }
 
 /* INDUSTRY */
-/* INDUSTRY */
 export interface Industry {
   id: string;
-  slug: string;        // ✅ REQUIRED (used in industries.ts and routing)
   title: string;
   description: string;
   iconName: string;
   image: string;
 }
-
