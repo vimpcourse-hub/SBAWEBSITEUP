@@ -10,6 +10,15 @@ export interface ProjectCategory {
   primary: string;
   secondary: string[];
 }
+export interface EntityItem {
+  name: string;
+  file?: string;
+  type: "client" | "authority" | "partner";
+  group: string;              // ✅ REQUIRED
+  subtitle?: string;
+  isTextOnly?: boolean;
+}
+
 
 export interface ProjectValue {
   amount: number;
