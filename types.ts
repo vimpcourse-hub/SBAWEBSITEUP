@@ -29,7 +29,6 @@ export interface ProjectLocation {
   country: string;
 }
 
-/* FOR LOGO FILTERING */
 export interface ProjectEntities {
   clients?: string[];
   authorities?: string[];
@@ -58,7 +57,7 @@ export interface Project {
   displayOnHomeHero: boolean;
 }
 
-/* LOGO ITEMS */
+/* LOGO ENTITY */
 export interface EntityItem {
   name: string;
   file?: string;
