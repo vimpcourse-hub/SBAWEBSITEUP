@@ -1,7 +1,3 @@
-// types.ts
-
-/* ================= PROJECT ================= */
-
 export interface ProjectClient {
   name: string;
   slug: string;
@@ -31,11 +27,11 @@ export interface ProjectLocation {
   country: string;
 }
 
-/* ✅ USED FOR LOGO GROUP FILTERING */
+/* USED FOR LOGO FILTERING */
 export interface ProjectEntities {
-  clients?: string[];      // ["WIPRO"]
-  authorities?: string[];  // ["GOVT_KA"]
-  partners?: string[];     // ["IVRCL"]
+  clients?: string[];
+  authorities?: string[];
+  partners?: string[];
 }
 
 export interface Project {
@@ -60,25 +56,21 @@ export interface Project {
   displayOnHomeHero: boolean;
 }
 
-/* ================= ENTITY LOGOS ================= */
-
+/* LOGO ENTITIES */
 export interface EntityItem {
   name: string;
   file?: string;
   type: "client" | "authority" | "partner";
-  group: string;          // ✅ GROUP ONLY HERE
+  group: string;          // USED IN FILTER
   subtitle?: string;
   isTextOnly?: boolean;
 }
 
-/* ================= INDUSTRIES ================= */
-
+/* INDUSTRY */
 export interface Industry {
   id: string;
   title: string;
-  slug: string;
   description: string;
   iconName: string;
   image: string;
-  categoryMapping?: string;
 }
