@@ -1,5 +1,5 @@
 export interface EntityItem {
-  key: string; // 🔑 canonical ID (used in projects)
+  key: string;
   name: string;
   type: "client" | "authority" | "partner";
   parent?: string;
@@ -9,8 +9,7 @@ export interface EntityItem {
 }
 
 export const ENTITIES: EntityItem[] = [
-  /* ===================== CLIENTS ===================== */
-
+  /* CLIENTS */
   { key: "BERGER", name: "Berger Paints Limited", type: "client", file: "berger.png" },
   { key: "WIPRO", name: "Wipro Enterprises Limited", type: "client", file: "wipro.png" },
   { key: "BRITISH", name: "British Paints", type: "client", file: "british-paints.png" },
@@ -20,33 +19,27 @@ export const ENTITIES: EntityItem[] = [
   { key: "TIRUPATI", name: "Tirupati Steels", type: "client", file: "tirupati-steels.png" },
   { key: "MB_SMELTERS", name: "M.B. Smelters", type: "client", isTextOnly: true },
 
-  /* ===================== GOVERNMENT ===================== */
+  /* GOVT PARENTS */
+  { key: "govt-karnataka", name: "Government of Karnataka", type: "authority", file: "govt-karnataka.png" },
+  { key: "govt-andhra-pradesh", name: "Government of Andhra Pradesh", type: "authority", file: "govt-andhra-pradesh.jpg" },
 
-  {
-    key: "govt-karnataka",
-    name: "Government of Karnataka",
-    type: "authority",
-    file: "govt-karnataka.png"
-  },
-  {
-    key: "govt-andhra-pradesh",
-    name: "Government of Andhra Pradesh",
-    type: "authority",
-    file: "govt-andhra-pradesh.jpg"
-  },
-  {
-    key: "indian-railways",
-    name: "Indian Railways",
-    subtitle: "Government of India",
-    type: "authority",
-    file: "irctc.png"
-  },
+  /* KARNATAKA – CHILDREN */
+  { key: "pwd-ka", name: "Public Works Department", parent: "govt-karnataka", type: "authority" },
+  { key: "kiadb", name: "KIADB", parent: "govt-karnataka", type: "authority", file: "kiadb.png" },
+  { key: "hospet-mc", name: "Hospet Municipal Council", parent: "govt-karnataka", type: "authority", isTextOnly: true },
+  { key: "chitradurga-mc", name: "Chitradurga Municipal Council", parent: "govt-karnataka", type: "authority", isTextOnly: true },
+  { key: "irrigation-ka", name: "Irrigation Department", parent: "govt-karnataka", type: "authority" },
 
-  /* ===================== PARTNERS ===================== */
+  /* ANDHRA – CHILDREN */
+  { key: "hindupur-municipality", name: "Hindupur Municipality", parent: "govt-andhra-pradesh", type: "authority", isTextOnly: true },
+  { key: "water-board-ap", name: "Government Water Board", parent: "govt-andhra-pradesh", type: "authority" },
 
-  { key: "NSL", name: "NSL Constructions Private Limited", type: "partner", file: "nsl.png" },
+  /* CENTRAL */
+  { key: "indian-railways", name: "Indian Railways", type: "authority", file: "irctc.png" },
+
+  /* PARTNERS */
+  { key: "NSL", name: "NSL Constructions Pvt Ltd", type: "partner", file: "nsl.png" },
   { key: "IVRCL", name: "IVRCL", type: "partner", file: "ivrcl.png" },
-  { key: "GVPR", name: "GVPR Engineers Limited", type: "partner", file: "gvpr.png" },
-  { key: "LNT", name: "Larsen & Toubro", type: "partner", file: "lnt.png" },
-  { key: "SHASHANK", name: "Shashank Constructions", type: "partner", isTextOnly: true }
+  { key: "GVPR", name: "GVPR Engineers Ltd", type: "partner", file: "gvpr.png" },
+  { key: "LNT", name: "Larsen & Toubro", type: "partner", file: "lnt.png" }
 ];
