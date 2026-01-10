@@ -1,56 +1,26 @@
-import React from "react";
 import { ENTITIES } from "../data/entities";
 import { Link } from "react-router-dom";
 
-const ClientCarousel: React.FC = () => {
-  const items = ENTITIES.filter(e =>
-    e.type === "client" || e.type === "authority"
-  );
+const ClientCarousel = () => {
+  const items = ENTITIES.filter(e => e.type === "client");
 
   return (
-    <div className="py-20 bg-white overflow-hidden">
-      <div className="flex animate-scroll whitespace-nowrap py-6">
-
-        {[...items, ...items].map((entity, i) => (
+    <div className="py-20 overflow-hidden bg-white">
+      <div className="flex animate-scroll whitespace-nowrap">
+        {[...items, ...items].map((e, i) => (
           <Link
-            key={`${entity.key}-${i}`}
-            to={`/projects?entity=${entity.key}`}
-            className="
-              mx-4 w-[220px] h-[140px]
-              flex items-center justify-center
-              bg-white border border-gray-100
-              hover:border-blue-900
-              transition shadow-sm hover:shadow-lg
-            "
+            key={e.key + i}
+            to={`/projects?entity=${e.key}`}
+            className="mx-4 w-[220px] h-[130px] flex items-center justify-center border hover:border-blue-900"
           >
-            {entity.isTextOnly ? (
-              <span className="text-sm font-bold uppercase text-center px-3">
-                {entity.name}
-              </span>
+            {e.file ? (
+              <img src={`/images/entities/${e.file}`} className="max-h-[70px]" />
             ) : (
-              <img
-                src={`/images/entities/${entity.file}`}
-                alt={entity.name}
-                className="max-h-[80px] max-w-[180px] object-contain"
-              />
+              <span className="font-bold text-sm">{e.name}</span>
             )}
           </Link>
         ))}
-
       </div>
-
-      <style>{`
-        @keyframes scroll {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .animate-scroll {
-          animation: scroll 40s linear infinite;
-        }
-        .animate-scroll:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
     </div>
   );
 };
