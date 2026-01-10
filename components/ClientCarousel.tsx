@@ -1,36 +1,58 @@
-export interface EntityItem {
-  key: string; // canonical filter key
-  name: string;
-  type: "client" | "authority" | "partner";
-  parent?: string;
-  file?: string;
-  subtitle?: string;
-  isTextOnly?: boolean;
-}
+import React from "react";
+import { ENTITIES } from "../data/entities";
+import { Link } from "react-router-dom";
 
-export const ENTITIES: EntityItem[] = [
-  /* ================= CLIENTS ================= */
+const ClientCarousel: React.FC = () => {
+  const items = ENTITIES.filter(e =>
+    e.type === "client" || e.type === "authority"
+  );
 
-  { key: "BERGER", name: "Berger Paints Limited", type: "client", file: "berger.png" },
-  { key: "WIPRO", name: "Wipro Enterprises Limited", type: "client", file: "wipro.png" },
-  { key: "BRITISH", name: "British Paints", type: "client", file: "british-paints.png" },
-  { key: "JOYALUKKAS", name: "Joyalukkas", type: "client", file: "joyalukkas.png" },
-  { key: "SUZLON", name: "Suzlon Infrastructure Limited", type: "client", file: "suzlon.png" },
-  { key: "BHORUKA", name: "Bhoruka Power Corporation", type: "client", file: "bhoruka.jpg" },
-  { key: "TIRUPATI", name: "Tirupati Steels", type: "client", file: "tirupati-steels.png" },
-  { key: "MB_SMELTERS", name: "M.B. Smelters", type: "client", isTextOnly: true },
+  return (
+    <div className="py-20 bg-white overflow-hidden">
+      <div className="flex animate-scroll whitespace-nowrap py-6">
 
-  /* ================= GOVERNMENT ================= */
+        {[...items, ...items].map((entity, i) => (
+          <Link
+            key={`${entity.key}-${i}`}
+            to={`/projects?entity=${entity.key}`}
+            className="
+              mx-4 w-[220px] h-[140px]
+              flex items-center justify-center
+              bg-white border border-gray-100
+              hover:border-blue-900
+              transition shadow-sm hover:shadow-lg
+            "
+          >
+            {entity.isTextOnly ? (
+              <span className="text-sm font-bold uppercase text-center px-3">
+                {entity.name}
+              </span>
+            ) : (
+              <img
+                src={`/images/entities/${entity.file}`}
+                alt={entity.name}
+                className="max-h-[80px] max-w-[180px] object-contain"
+              />
+            )}
+          </Link>
+        ))}
 
-  { key: "govt-karnataka", name: "Government of Karnataka", type: "authority", file: "govt-karnataka.png" },
-  { key: "govt-andhra-pradesh", name: "Government of Andhra Pradesh", type: "authority", file: "govt-andhra-pradesh.jpg" },
-  { key: "indian-railways", name: "Indian Railways", type: "authority", file: "irctc.png" },
+      </div>
 
-  /* ================= PARTNERS ================= */
+      <style>{`
+        @keyframes scroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-scroll {
+          animation: scroll 40s linear infinite;
+        }
+        .animate-scroll:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+    </div>
+  );
+};
 
-  { key: "NSL", name: "NSL Constructions Private Limited", type: "partner", file: "nsl.png" },
-  { key: "IVRCL", name: "IVRCL", type: "partner", file: "ivrcl.png" },
-  { key: "GVPR", name: "GVPR Engineers Limited", type: "partner", file: "gvpr.png" },
-  { key: "LNT", name: "Larsen & Toubro", type: "partner", file: "lnt.png" },
-  { key: "SHASHANK", name: "Shashank Constructions", type: "partner", isTextOnly: true }
-];
+export default ClientCarousel;
