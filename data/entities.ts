@@ -1,5 +1,5 @@
 export interface EntityItem {
-  key: string; // 🔑 used in projects + filters
+  key: string; // 🔑 canonical ID (used in projects)
   name: string;
   type: "client" | "authority" | "partner";
   parent?: string;
@@ -9,7 +9,8 @@ export interface EntityItem {
 }
 
 export const ENTITIES: EntityItem[] = [
-  /* ================= CLIENTS ================= */
+  /* ===================== CLIENTS ===================== */
+
   { key: "BERGER", name: "Berger Paints Limited", type: "client", file: "berger.png" },
   { key: "WIPRO", name: "Wipro Enterprises Limited", type: "client", file: "wipro.png" },
   { key: "BRITISH", name: "British Paints", type: "client", file: "british-paints.png" },
@@ -19,7 +20,8 @@ export const ENTITIES: EntityItem[] = [
   { key: "TIRUPATI", name: "Tirupati Steels", type: "client", file: "tirupati-steels.png" },
   { key: "MB_SMELTERS", name: "M.B. Smelters", type: "client", isTextOnly: true },
 
-  /* ================= GOVERNMENT (AS CLIENTS) ================= */
+  /* ===================== GOVERNMENT ===================== */
+
   {
     key: "govt-karnataka",
     name: "Government of Karnataka",
@@ -40,8 +42,9 @@ export const ENTITIES: EntityItem[] = [
     file: "irctc.png"
   },
 
-  /* ================= PARTNERS ================= */
-  { key: "NSL", name: "NSL Constructions Pvt Ltd", type: "partner", file: "nsl.png" },
+  /* ===================== PARTNERS ===================== */
+
+  { key: "NSL", name: "NSL Constructions Private Limited", type: "partner", file: "nsl.png" },
   { key: "IVRCL", name: "IVRCL", type: "partner", file: "ivrcl.png" },
   { key: "GVPR", name: "GVPR Engineers Limited", type: "partner", file: "gvpr.png" },
   { key: "LNT", name: "Larsen & Toubro", type: "partner", file: "lnt.png" },
