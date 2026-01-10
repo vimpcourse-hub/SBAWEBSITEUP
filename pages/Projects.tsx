@@ -22,83 +22,55 @@ const Projects: React.FC = () => {
 
   /* ---------- URL FILTERS ---------- */
   const urlVertical = query.get("vertical") || "ALL";
-  const urlGroup = query.get("group") || "ALL";     // logo based
-  const urlClient = query.get("client") || "ALL";   // legacy
+  const urlGroup = query.get("group") || "ALL";
 
   /* ---------- STATE ---------- */
-  const [selectedVertical, setSelectedVertical] = useState(urlVertical);
+  const [selectedVertical, setSelectedVertical] = useState("ALL");
   const [selectedCategory, setSelectedCategory] = useState("ALL");
-  const [selectedGroup, setSelectedGroup] = useState(urlGroup);
-  const [selectedClient, setSelectedClient] = useState(urlClient);
+  const [selectedGroup, setSelectedGroup] = useState("ALL");
 
-  /* ---------- SYNC URL ---------- */
+  /* ---------- SYNC FROM URL (LOGO CLICKS) ---------- */
   useEffect(() => {
-    setSelectedVertical(urlVertical);
     setSelectedGroup(urlGroup);
-    setSelectedClient(urlClient);
-  }, [urlVertical, urlGroup, urlClient]);
+  }, [urlGroup]);
 
   /* ---------- DROPDOWN DATA ---------- */
   const allCategories = useMemo(() => {
     const set = new Set<string>();
     PROJECTS.forEach(p => set.add(p.category.primary.toUpperCase()));
-    return Array.from(set).sort();
-  }, []);
-
-  const allClients = useMemo(() => {
-    const set = new Set<string>();
-    PROJECTS.forEach(p => {
-      set.add(p.client.name);
-      p.entities?.clients?.forEach(x => set.add(x));
-      p.entities?.authorities?.forEach(x => set.add(x));
-      p.entities?.partners?.forEach(x => set.add(x));
-    });
-    return Array.from(set).sort();
+    return ["ALL", ...Array.from(set).sort()];
   }, []);
 
   /* ---------- FILTER LOGIC ---------- */
   const filteredProjects = useMemo(() => {
-    const sv = selectedVertical.toUpperCase();
-    const sc = selectedClient.toLowerCase();
-
     return PROJECTS.filter(p => {
-      const matchVertical =
-        sv === "ALL" || p.vertical.toUpperCase() === sv;
 
+      /* VERTICAL */
+      const matchVertical =
+        selectedVertical === "ALL" ||
+        p.vertical === selectedVertical;
+
+      /* CATEGORY */
       const matchCategory =
         selectedCategory === "ALL" ||
         p.category.primary.toUpperCase() === selectedCategory;
 
-      /* ✅ GROUP MATCH (LOGO CLICK FILTER) */
+      /* GROUP (LOGO CLICK) */
       const matchGroup =
         selectedGroup === "ALL" ||
         p.entities?.clients?.includes(selectedGroup) ||
         p.entities?.authorities?.includes(selectedGroup) ||
         p.entities?.partners?.includes(selectedGroup);
 
-      /* ✅ NAME MATCH (DROPDOWN / OLD LINKS) */
-      const matchClient =
-        selectedClient === "ALL" ||
-        p.client.name.toLowerCase() === sc ||
-        p.entities?.clients?.some(x => x.toLowerCase() === sc) ||
-        p.entities?.authorities?.some(x => x.toLowerCase() === sc) ||
-        p.entities?.partners?.some(x => x.toLowerCase() === sc);
-
-      return matchVertical && matchCategory && matchGroup && matchClient;
+      return matchVertical && matchCategory && matchGroup;
     });
-  }, [
-    selectedVertical,
-    selectedCategory,
-    selectedGroup,
-    selectedClient,
-  ]);
+  }, [selectedVertical, selectedCategory, selectedGroup]);
 
   /* ---------- CLEAR ---------- */
   const clearFilters = () => {
     setSelectedVertical("ALL");
     setSelectedCategory("ALL");
     setSelectedGroup("ALL");
-    setSelectedClient("ALL");
     window.history.replaceState({}, "", "/projects");
   };
 
@@ -112,8 +84,7 @@ const Projects: React.FC = () => {
             Project Archive
           </h1>
           <p className="text-gray-500 text-sm max-w-2xl">
-            Explore our executed infrastructure and industrial projects across
-            sectors, clients and authorities.
+            Explore our executed infrastructure and industrial projects.
           </p>
         </div>
       </section>
@@ -148,28 +119,20 @@ const Projects: React.FC = () => {
               onChange={e => setSelectedCategory(e.target.value)}
               className="w-full border border-gray-200 px-4 py-3 text-sm bg-white"
             >
-              <option value="ALL">ALL</option>
               {allCategories.map(c => (
                 <option key={c} value={c}>{c}</option>
               ))}
             </select>
           </div>
 
-          {/* CLIENT / AUTH / PARTNER */}
+          {/* LOGO FILTER STATUS */}
           <div>
             <div className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2">
-              Client / Authority / Partner
+              Logo Filter
             </div>
-            <select
-              value={selectedClient}
-              onChange={e => setSelectedClient(e.target.value)}
-              className="w-full border border-gray-200 px-4 py-3 text-sm bg-white"
-            >
-              <option value="ALL">ALL</option>
-              {allClients.map(c => (
-                <option key={c} value={c}>{c}</option>
-              ))}
-            </select>
+            <div className="border border-gray-200 px-4 py-3 text-sm bg-white">
+              {selectedGroup === "ALL" ? "ALL" : selectedGroup}
+            </div>
           </div>
 
           {/* CLEAR */}
