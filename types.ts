@@ -1,24 +1,23 @@
-// types.ts
-
 export interface ProjectClient {
   name: string;
   slug: string;
   logo: string;
+  group: string; // ✅ REQUIRED
 }
 
 export interface ProjectCategory {
   primary: string;
   secondary: string[];
 }
+
 export interface EntityItem {
   name: string;
   file?: string;
   type: "client" | "authority" | "partner";
-  group: string;              // ✅ REQUIRED
+  group: string; // ✅ REQUIRED
   subtitle?: string;
   isTextOnly?: boolean;
 }
-
 
 export interface ProjectValue {
   amount: number;
@@ -29,7 +28,7 @@ export interface ProjectValue {
 export interface ProjectTimeline {
   start: string;
   end: string;
-  status: 'Completed' | 'In Progress' | 'Upcoming';
+  status: "Completed" | "In Progress" | "Upcoming";
 }
 
 export interface ProjectLocation {
@@ -38,37 +37,36 @@ export interface ProjectLocation {
   country: string;
 }
 
-/* ✅ ADD THIS */
 export interface ProjectEntities {
-  clients?: string[];
-  authorities?: string[];
-  partners?: string[];
+  clients?: string[];     // group codes
+  authorities?: string[]; // group codes
+  partners?: string[];    // group codes
 }
 
 export interface Project {
   id: string;
   slug: string;
   title: string;
-
-  /* ✅ REQUIRED FOR VERTICAL FILTER */
   vertical: string;
 
   client: ProjectClient;
-  entities?: ProjectEntities;   // ✅ FIXES YOUR ERROR
+  entities?: ProjectEntities;
+
   category: ProjectCategory;
   tags: string[];
   location: ProjectLocation;
   projectValue: ProjectValue;
   timeline: ProjectTimeline;
+
   heroImage: string;
   gallery: string[];
   scopeOfWork: string[];
   description: string;
+
   isFeatured: boolean;
   displayOnHomeHero: boolean;
 }
 
-/* ✅ INDUSTRY TYPE (FIXES industries.ts ERROR) */
 export interface Industry {
   id: string;
   title: string;
