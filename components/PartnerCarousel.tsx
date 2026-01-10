@@ -32,7 +32,7 @@ const PartnerCarousel: React.FC = () => {
           {[...items, ...items].map((entity, i) => (
             <Link
               key={i}
-              to={`/projects?group=${entity.group}`}   // ✅ AUTO FILTER BY GROUP
+              to={`/projects?entity=${entity.group}`}   // ✅ AUTO FILTER
               className="mx-3 w-[220px] sm:w-[260px] h-28 sm:h-36 flex items-center justify-center bg-white border border-gray-100 hover:border-blue-900 transition-all duration-300 shadow-sm hover:shadow-lg px-6"
             >
               {entity.isTextOnly ? (
