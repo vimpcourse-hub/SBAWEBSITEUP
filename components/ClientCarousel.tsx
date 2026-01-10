@@ -13,12 +13,12 @@ const ClientCarousel: React.FC = () => {
           <Link
             key={i}
             to={`/projects?group=${entity.group}`}
-            className="mx-4 w-[240px] h-32 flex items-center justify-center
-                       bg-white border hover:border-blue-900 transition
-                       shadow-sm hover:shadow-lg"
+            className="mx-4 w-[260px] h-36 flex items-center justify-center
+                       bg-white border border-gray-100 hover:border-blue-900
+                       transition shadow-sm hover:shadow-lg px-6"
           >
             {entity.isTextOnly ? (
-              <span className="text-sm font-bold text-center">
+              <span className="text-sm font-bold text-center uppercase">
                 {entity.name}
               </span>
             ) : (
