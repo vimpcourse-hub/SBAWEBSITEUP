@@ -14,19 +14,24 @@ import { Link } from 'react-router-dom';
 
 const Home: React.FC = () => {
 
-const heroSlides = PROJECTS
-  .filter(p =>
-    // ✅ old logic (unchanged)
-    p.displayOnHomeHero ||
-    p.isFeatured ||
+  /* =========================================================
+     HERO SLIDES
+     RULE:
+     - ONLY curated projects
+     - MUST have heroImage
+     ========================================================= */
+  const heroSlides = PROJECTS
+    .filter(
+      p =>
+        (p.displayOnHomeHero || p.isFeatured) &&
+        p.heroImage &&
+        p.heroImage.trim() !== ""
+    )
+    .slice(0, 6);
 
-    // ✅ new automatic fallback (SAFE)
-    (p.heroImage && p.heroImage.trim() !== "")
-  )
-  .slice(0, 6);
-
-
-  const featuredProjects = PROJECTS.filter(p => p.isFeatured).slice(0, 3);
+  const featuredProjects = PROJECTS
+    .filter(p => p.isFeatured)
+    .slice(0, 3);
 
   const stats = [
     { label: 'Asset Valuation', value: '40+', unit: 'Crore', icon: TrendingUp },
@@ -68,7 +73,9 @@ const heroSlides = PROJECTS
                 </div>
                 <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-blue-200 mt-2">
                   {stat.label}
-                  <span className="block font-normal mt-0.5 opacity-40 lowercase tracking-widest">{stat.unit}</span>
+                  <span className="block font-normal mt-0.5 opacity-40 lowercase tracking-widest">
+                    {stat.unit}
+                  </span>
                 </div>
               </div>
             ))}
@@ -82,7 +89,9 @@ const heroSlides = PROJECTS
           
           {/* TEXT */}
           <div className="order-2 lg:order-1">
-            <div className="text-blue-900 font-bold tracking-[0.5em] uppercase text-[10px] mb-6">Established 2011</div>
+            <div className="text-blue-900 font-bold tracking-[0.5em] uppercase text-[10px] mb-6">
+              Established 2011
+            </div>
             <h2 className="text-4xl md:text-7xl font-bold text-gray-900 mb-8 leading-tight uppercase tracking-tighter">
               Technical <br className="hidden md:block" />
               <span className="text-blue-900 font-black">Contracting.</span>
@@ -96,7 +105,10 @@ const heroSlides = PROJECTS
               </p>
             </div>
             <div className="mt-12">
-              <Link to="/about" className="group inline-flex items-center justify-center bg-blue-900 text-white px-10 py-5 font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-black transition-all shadow-2xl">
+              <Link
+                to="/about"
+                className="group inline-flex items-center justify-center bg-blue-900 text-white px-10 py-5 font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-black transition-all shadow-2xl"
+              >
                 Capability Profile
                 <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-2 transition-transform" />
               </Link>
@@ -106,15 +118,13 @@ const heroSlides = PROJECTS
           {/* IMAGE */}
           <div className="relative order-1 lg:order-2">
             <div className="aspect-[4/5] overflow-hidden shadow-2xl border-8 border-white bg-gray-100">
-             <img 
-  src="/about/precision.jpg"
-  alt="Precision Construction"
-  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
-/>
-
+              <img
+                src="/about/precision.jpg"
+                alt="Precision Construction"
+                className="w-full h-full object-cover"
+              />
             </div>
 
-            {/* QUOTE BOX */}
             <div className="absolute -bottom-12 -right-12 bg-blue-900 p-12 shadow-2xl max-w-sm hidden sm:block">
               <p className="text-white italic text-xl leading-relaxed mb-4 font-light">
                 "Precision is our fundamental currency."
@@ -134,7 +144,9 @@ const heroSlides = PROJECTS
 
           <div className="mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between">
             <div>
-              <h2 className="text-[10px] font-bold text-blue-900 uppercase tracking-[0.5em] mb-4">Operational Sectors</h2>
+              <h2 className="text-[10px] font-bold text-blue-900 uppercase tracking-[0.5em] mb-4">
+                Operational Sectors
+              </h2>
               <h3 className="text-3xl md:text-6xl font-bold text-gray-900 uppercase tracking-tighter leading-none">
                 Specialized Verticals
               </h3>
@@ -146,8 +158,8 @@ const heroSlides = PROJECTS
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border border-gray-200">
             {INDUSTRIES.map((industry) => (
-              <Link 
-                key={industry.id} 
+              <Link
+                key={industry.id}
                 to={`/projects?vertical=${encodeURIComponent(industry.title.toUpperCase())}`}
                 className="group relative bg-white p-8 md:p-12 hover:bg-blue-900 transition-all duration-500 overflow-hidden border-b border-gray-100 md:border-r block"
               >
@@ -170,11 +182,11 @@ const heroSlides = PROJECTS
                     {industry.description}
                   </p>
 
-                  <div className="aspect-[16/10] overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700 relative">
-                    <img 
-                      src={industry.image} 
-                      alt={industry.title} 
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                  <div className="aspect-[16/10] overflow-hidden relative">
+                    <img
+                      src={industry.image}
+                      alt={industry.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-blue-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                       <span className="text-white text-[10px] font-bold uppercase tracking-widest border border-white/40 px-4 py-2 bg-blue-900/60 backdrop-blur-sm">
@@ -197,12 +209,17 @@ const heroSlides = PROJECTS
 
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24">
             <div>
-              <div className="text-blue-900 font-bold tracking-[0.5em] uppercase text-[10px] mb-4">The Archive</div>
+              <div className="text-blue-900 font-bold tracking-[0.5em] uppercase text-[10px] mb-4">
+                The Archive
+              </div>
               <h2 className="text-3xl md:text-6xl font-bold text-gray-900 uppercase tracking-tighter">
                 Portfolio Highlights
               </h2>
             </div>
-            <Link to="/projects" className="mt-6 md:mt-0 bg-blue-900 text-white px-10 py-5 text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-xl">
+            <Link
+              to="/projects"
+              className="mt-6 md:mt-0 bg-blue-900 text-white px-10 py-5 text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-xl"
+            >
               View All Assets
             </Link>
           </div>
@@ -236,10 +253,16 @@ const heroSlides = PROJECTS
             Commission a technical consultation for your next industrial infrastructure asset.
           </p>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
-            <Link to="/contact" className="w-full sm:w-auto bg-white text-blue-900 px-12 py-5 font-bold uppercase tracking-widest text-[10px] hover:bg-blue-50 transition-all shadow-2xl">
+            <Link
+              to="/contact"
+              className="w-full sm:w-auto bg-white text-blue-900 px-12 py-5 font-bold uppercase tracking-widest text-[10px] hover:bg-blue-50 transition-all shadow-2xl"
+            >
               Initiate Inquiry
             </Link>
-            <Link to="/about" className="w-full sm:w-auto border border-white/40 text-white px-12 py-5 font-bold uppercase tracking-widest text-[10px] hover:bg-white/10 transition-all backdrop-blur-md">
+            <Link
+              to="/about"
+              className="w-full sm:w-auto border border-white/40 text-white px-12 py-5 font-bold uppercase tracking-widest text-[10px] hover:bg-white/10 transition-all backdrop-blur-md"
+            >
               Learn Methodology
             </Link>
           </div>
