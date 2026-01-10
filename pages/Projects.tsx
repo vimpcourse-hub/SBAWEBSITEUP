@@ -22,8 +22,8 @@ const Projects: React.FC = () => {
 
   /* ---------- URL FILTERS ---------- */
   const urlVertical = query.get("vertical") || "ALL";
-  const urlGroup = query.get("group") || "ALL";     // ✅ NEW (logo based)
-  const urlClient = query.get("client") || "ALL";   // ✅ BACKWARD COMPATIBLE
+  const urlGroup = query.get("group") || "ALL";     // logo based
+  const urlClient = query.get("client") || "ALL";   // legacy
 
   /* ---------- STATE ---------- */
   const [selectedVertical, setSelectedVertical] = useState(urlVertical);
@@ -49,9 +49,9 @@ const Projects: React.FC = () => {
     const set = new Set<string>();
     PROJECTS.forEach(p => {
       set.add(p.client.name);
-      p.entities?.partners?.forEach(x => set.add(x));
-      p.entities?.authorities?.forEach(x => set.add(x));
       p.entities?.clients?.forEach(x => set.add(x));
+      p.entities?.authorities?.forEach(x => set.add(x));
+      p.entities?.partners?.forEach(x => set.add(x));
     });
     return Array.from(set).sort();
   }, []);
@@ -69,19 +69,20 @@ const Projects: React.FC = () => {
         selectedCategory === "ALL" ||
         p.category.primary.toUpperCase() === selectedCategory;
 
-      /* ---------- GROUP MATCH (LOGO CLICK) ---------- */
+      /* ✅ GROUP MATCH (LOGO CLICK FILTER) */
       const matchGroup =
         selectedGroup === "ALL" ||
-        p.client.group === selectedGroup ||
+        p.entities?.clients?.includes(selectedGroup) ||
+        p.entities?.authorities?.includes(selectedGroup) ||
         p.entities?.partners?.includes(selectedGroup);
 
-      /* ---------- NAME MATCH (DROPDOWN / OLD URL) ---------- */
+      /* ✅ NAME MATCH (DROPDOWN / OLD LINKS) */
       const matchClient =
         selectedClient === "ALL" ||
         p.client.name.toLowerCase() === sc ||
-        p.entities?.partners?.some(x => x.toLowerCase() === sc) ||
+        p.entities?.clients?.some(x => x.toLowerCase() === sc) ||
         p.entities?.authorities?.some(x => x.toLowerCase() === sc) ||
-        p.entities?.clients?.some(x => x.toLowerCase() === sc);
+        p.entities?.partners?.some(x => x.toLowerCase() === sc);
 
       return matchVertical && matchCategory && matchGroup && matchClient;
     });
@@ -154,7 +155,7 @@ const Projects: React.FC = () => {
             </select>
           </div>
 
-          {/* CLIENT (LEGACY) */}
+          {/* CLIENT / AUTH / PARTNER */}
           <div>
             <div className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2">
               Client / Authority / Partner
