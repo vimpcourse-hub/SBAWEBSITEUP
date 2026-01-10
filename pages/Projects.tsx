@@ -3,10 +3,8 @@ import { useLocation } from "react-router-dom";
 import ProjectCard from "../components/ProjectCard";
 import { PROJECTS } from "../data/projects";
 
-/* ---------- HELPERS ---------- */
 const useQuery = () => new URLSearchParams(useLocation().search);
 
-/* ---------- CONSTANTS ---------- */
 const VERTICALS = [
   "ALL",
   "FMCG & Consumer Goods",
@@ -20,53 +18,44 @@ const VERTICALS = [
 const Projects: React.FC = () => {
   const query = useQuery();
 
-  /* ---------- URL FILTERS ---------- */
-  const urlVertical = query.get("vertical") || "ALL";
   const urlGroup = query.get("group") || "ALL";
 
-  /* ---------- STATE ---------- */
   const [selectedVertical, setSelectedVertical] = useState("ALL");
   const [selectedCategory, setSelectedCategory] = useState("ALL");
   const [selectedGroup, setSelectedGroup] = useState("ALL");
 
-  /* ---------- SYNC FROM URL (LOGO CLICKS) ---------- */
+  /* ✅ APPLY LOGO FILTER FROM URL */
   useEffect(() => {
     setSelectedGroup(urlGroup);
   }, [urlGroup]);
 
-  /* ---------- DROPDOWN DATA ---------- */
   const allCategories = useMemo(() => {
     const set = new Set<string>();
     PROJECTS.forEach(p => set.add(p.category.primary.toUpperCase()));
-    return ["ALL", ...Array.from(set).sort()];
+    return ["ALL", ...Array.from(set)];
   }, []);
 
-  /* ---------- FILTER LOGIC ---------- */
+  /* ✅ FINAL FILTER LOGIC */
   const filteredProjects = useMemo(() => {
     return PROJECTS.filter(p => {
 
-      /* VERTICAL */
       const matchVertical =
-        selectedVertical === "ALL" ||
-        p.vertical === selectedVertical;
+        selectedVertical === "ALL" || p.vertical === selectedVertical;
 
-      /* CATEGORY */
       const matchCategory =
         selectedCategory === "ALL" ||
         p.category.primary.toUpperCase() === selectedCategory;
 
-      /* GROUP (LOGO CLICK) */
       const matchGroup =
         selectedGroup === "ALL" ||
         p.entities?.clients?.includes(selectedGroup) ||
-        p.entities?.authorities?.includes(selectedGroup) ||
-        p.entities?.partners?.includes(selectedGroup);
+        p.entities?.partners?.includes(selectedGroup) ||
+        p.entities?.authorities?.includes(selectedGroup);
 
       return matchVertical && matchCategory && matchGroup;
     });
   }, [selectedVertical, selectedCategory, selectedGroup]);
 
-  /* ---------- CLEAR ---------- */
   const clearFilters = () => {
     setSelectedVertical("ALL");
     setSelectedCategory("ALL");
@@ -77,93 +66,38 @@ const Projects: React.FC = () => {
   return (
     <div className="pt-20 bg-white">
 
-      {/* HEADER */}
-      <section className="py-16 border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6">
-          <h1 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter mb-4">
-            Project Archive
-          </h1>
-          <p className="text-gray-500 text-sm max-w-2xl">
-            Explore our executed infrastructure and industrial projects.
-          </p>
-        </div>
-      </section>
-
       {/* FILTER BAR */}
-      <section className="py-12 bg-gray-50 border-b border-gray-100">
+      <section className="py-12 bg-gray-50 border-b">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
 
-          {/* VERTICAL */}
-          <div>
-            <div className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2">
-              Vertical
-            </div>
-            <select
-              value={selectedVertical}
-              onChange={e => setSelectedVertical(e.target.value)}
-              className="w-full border border-gray-200 px-4 py-3 text-sm bg-white"
-            >
-              {VERTICALS.map(v => (
-                <option key={v} value={v}>{v}</option>
-              ))}
-            </select>
+          <select value={selectedVertical} onChange={e => setSelectedVertical(e.target.value)}>
+            {VERTICALS.map(v => <option key={v}>{v}</option>)}
+          </select>
+
+          <select value={selectedCategory} onChange={e => setSelectedCategory(e.target.value)}>
+            {allCategories.map(c => <option key={c}>{c}</option>)}
+          </select>
+
+          {/* SHOW SELECTED LOGO FILTER */}
+          <div className="border px-4 py-2 text-sm bg-white">
+            {selectedGroup === "ALL" ? "ALL" : selectedGroup}
           </div>
 
-          {/* CATEGORY */}
-          <div>
-            <div className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2">
-              Category
-            </div>
-            <select
-              value={selectedCategory}
-              onChange={e => setSelectedCategory(e.target.value)}
-              className="w-full border border-gray-200 px-4 py-3 text-sm bg-white"
-            >
-              {allCategories.map(c => (
-                <option key={c} value={c}>{c}</option>
-              ))}
-            </select>
-          </div>
-
-          {/* LOGO FILTER STATUS */}
-          <div>
-            <div className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2">
-              Logo Filter
-            </div>
-            <div className="border border-gray-200 px-4 py-3 text-sm bg-white">
-              {selectedGroup === "ALL" ? "ALL" : selectedGroup}
-            </div>
-          </div>
-
-          {/* CLEAR */}
-          <div className="flex items-end">
-            <button
-              onClick={clearFilters}
-              className="w-full border border-gray-300 px-4 py-3 text-[11px] font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all"
-            >
-              Clear Filters
-            </button>
-          </div>
+          <button onClick={clearFilters}>CLEAR FILTERS</button>
 
         </div>
       </section>
 
       {/* PROJECT GRID */}
       <section className="py-20">
-        <div className="max-w-7xl mx-auto px-6">
-
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-10">
           {filteredProjects.length === 0 ? (
-            <div className="text-center py-24 text-gray-400 uppercase tracking-widest text-sm">
-              No projects match selected filters
-            </div>
+            <div>No projects found</div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-              {filteredProjects.map(p => (
-                <ProjectCard key={p.id} project={p} />
-              ))}
-            </div>
+            filteredProjects.map(p => (
+              <ProjectCard key={p.id} project={p} />
+            ))
           )}
-
         </div>
       </section>
 
