@@ -26,24 +26,33 @@ const PartnerCarousel: React.FC = () => {
       </div>
 
       {/* SLIDER */}
-      <div className="flex overflow-hidden relative">
-        <div className="flex animate-scroll-partners whitespace-nowrap py-4">
+      <div className="overflow-hidden">
+        <div className="flex animate-scroll-partners whitespace-nowrap py-6">
 
           {[...items, ...items].map((entity, i) => (
             <Link
-              key={i}
-              to={`/projects?group=${entity.group}`}
-              className="mx-3 w-[220px] sm:w-[260px] h-28 sm:h-36 flex items-center justify-center bg-white border border-gray-100 hover:border-blue-900 transition-all duration-300 shadow-sm hover:shadow-lg px-6"
+              key={`${entity.name}-${i}`}
+              to={`/projects?group=${encodeURIComponent(entity.group)}`}
+              className="
+                mx-3
+                w-[180px] h-[110px]
+                flex items-center justify-center
+                bg-white
+                border border-gray-100
+                hover:border-blue-900
+                transition
+                shadow-sm hover:shadow-lg
+              "
             >
               {entity.isTextOnly ? (
-                <span className="text-sm font-bold text-gray-900 uppercase text-center">
+                <span className="text-[11px] font-bold uppercase text-center leading-tight px-2">
                   {entity.name}
                 </span>
               ) : (
                 <img
                   src={`/images/entities/${entity.file}`}
                   alt={entity.name}
-                  className="max-h-12 sm:max-h-14 object-contain"
+                  className="max-h-[48px] max-w-[120px] object-contain"
                 />
               )}
             </Link>
