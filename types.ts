@@ -67,10 +67,13 @@ export interface EntityItem {
 }
 
 /* INDUSTRY */
+/* INDUSTRY */
 export interface Industry {
   id: string;
+  slug: string;        // ✅ REQUIRED (used in industries.ts and routing)
   title: string;
   description: string;
   iconName: string;
   image: string;
 }
+
