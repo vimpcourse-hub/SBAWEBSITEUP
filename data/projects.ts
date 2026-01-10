@@ -260,8 +260,8 @@ export const PROJECTS: Project[] = [
     timeline: { start: "2020", end: "2021", status: "Completed" },
     heroImage: "/images/projects/project-placeholder.jpg",
     gallery: [],
-    scopeOfWork: ["Building Construction"],
-    description: "Canteen buildings and expansion sheds.",
+    scopeOfWork: ["Building Construction", "Shed Expansion"],
+    description: "Construction of Canteen Buildings and Expansion Sheds for Wipro Infrastructure.",
     isFeatured: false,
     displayOnHomeHero: false
   },
@@ -535,7 +535,7 @@ export const PROJECTS: Project[] = [
     slug: "furnace-slabs-mb-smelters",
     title: "Furnace Buildings & Industrial Sheds",
     vertical: "Machine & SPM",
-    client: { name: "MB Smelters", slug: "mb-smeltors", logo: "/images/entities/mb-smeltors.png" },
+    client: { name: "MB Smelters", slug: "mb-smeltors", logo: "" }, // Empty string as it is textOnly
     entities: { clients: ["MB_SMELTERS"] },
     category: { primary: "Industrial", secondary: [] },
     tags: ["industrial", "furnace"],
@@ -565,7 +565,7 @@ export const PROJECTS: Project[] = [
     heroImage: "/images/projects/project-placeholder.jpg",
     gallery: [],
     scopeOfWork: ["Furnace Construction"],
-    description: "Construction of Furnace at Tirupati Steels.",
+    description: "Construction of Furnace at Tirupati Steels, Hindupur.",
     isFeatured: false,
     displayOnHomeHero: false
   }
