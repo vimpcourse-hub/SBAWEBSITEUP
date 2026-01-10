@@ -4,8 +4,11 @@ import { Link } from "react-router-dom";
 
 const ClientCarousel: React.FC = () => {
 
-  // ✅ ONLY real clients
-  const items = ENTITIES.filter(e => e.type === "client");
+  // ✅ Clients + Govt PARENTS only
+  const items = ENTITIES.filter(e =>
+    e.type === "client" ||
+    (e.type === "authority" && !e.parent) // govt parents only
+  );
 
   return (
     <div className="py-20 bg-white overflow-hidden">
@@ -13,8 +16,8 @@ const ClientCarousel: React.FC = () => {
 
         {[...items, ...items].map((entity, i) => (
           <Link
-            key={`${entity.key}-${i}`}   // ✅ stable + safe
-            to={`/projects?entity=${encodeURIComponent(entity.key)}`} // ✅ correct param
+            key={`${entity.key}-${i}`}
+            to={`/projects?entity=${encodeURIComponent(entity.key)}`}
             className="
               mx-3
               w-[180px] h-[110px]
