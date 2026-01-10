@@ -22,18 +22,21 @@ const Projects: React.FC = () => {
 
   /* ---------- URL FILTERS ---------- */
   const urlVertical = query.get("vertical") || "ALL";
-  const urlClient = query.get("client") || "ALL";
+  const urlGroup = query.get("group") || "ALL";     // ✅ NEW (logo based)
+  const urlClient = query.get("client") || "ALL";   // ✅ BACKWARD COMPATIBLE
 
   /* ---------- STATE ---------- */
   const [selectedVertical, setSelectedVertical] = useState(urlVertical);
   const [selectedCategory, setSelectedCategory] = useState("ALL");
+  const [selectedGroup, setSelectedGroup] = useState(urlGroup);
   const [selectedClient, setSelectedClient] = useState(urlClient);
 
-  /* ---------- SYNC WHEN URL CHANGES ---------- */
+  /* ---------- SYNC URL ---------- */
   useEffect(() => {
     setSelectedVertical(urlVertical);
+    setSelectedGroup(urlGroup);
     setSelectedClient(urlClient);
-  }, [urlVertical, urlClient]);
+  }, [urlVertical, urlGroup, urlClient]);
 
   /* ---------- DROPDOWN DATA ---------- */
   const allCategories = useMemo(() => {
@@ -66,6 +69,13 @@ const Projects: React.FC = () => {
         selectedCategory === "ALL" ||
         p.category.primary.toUpperCase() === selectedCategory;
 
+      /* ---------- GROUP MATCH (LOGO CLICK) ---------- */
+      const matchGroup =
+        selectedGroup === "ALL" ||
+        p.client.group === selectedGroup ||
+        p.entities?.partners?.includes(selectedGroup);
+
+      /* ---------- NAME MATCH (DROPDOWN / OLD URL) ---------- */
       const matchClient =
         selectedClient === "ALL" ||
         p.client.name.toLowerCase() === sc ||
@@ -73,14 +83,20 @@ const Projects: React.FC = () => {
         p.entities?.authorities?.some(x => x.toLowerCase() === sc) ||
         p.entities?.clients?.some(x => x.toLowerCase() === sc);
 
-      return matchVertical && matchCategory && matchClient;
+      return matchVertical && matchCategory && matchGroup && matchClient;
     });
-  }, [selectedVertical, selectedCategory, selectedClient]);
+  }, [
+    selectedVertical,
+    selectedCategory,
+    selectedGroup,
+    selectedClient,
+  ]);
 
   /* ---------- CLEAR ---------- */
   const clearFilters = () => {
     setSelectedVertical("ALL");
     setSelectedCategory("ALL");
+    setSelectedGroup("ALL");
     setSelectedClient("ALL");
     window.history.replaceState({}, "", "/projects");
   };
@@ -138,7 +154,7 @@ const Projects: React.FC = () => {
             </select>
           </div>
 
-          {/* CLIENT */}
+          {/* CLIENT (LEGACY) */}
           <div>
             <div className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2">
               Client / Authority / Partner
