@@ -2,7 +2,6 @@ export interface ProjectClient {
   name: string;
   slug: string;
   logo: string;
-  group: string; // ✅ REQUIRED
 }
 
 export interface ProjectCategory {
@@ -14,7 +13,7 @@ export interface EntityItem {
   name: string;
   file?: string;
   type: "client" | "authority" | "partner";
-  group: string; // ✅ REQUIRED
+  group: string;                 // ✅ REQUIRED
   subtitle?: string;
   isTextOnly?: boolean;
 }
@@ -37,10 +36,11 @@ export interface ProjectLocation {
   country: string;
 }
 
+/* GROUP BASED MAPPING */
 export interface ProjectEntities {
-  clients?: string[];     // group codes
-  authorities?: string[]; // group codes
-  partners?: string[];    // group codes
+  clients?: string[];
+  authorities?: string[];
+  partners?: string[];
 }
 
 export interface Project {
@@ -54,6 +54,7 @@ export interface Project {
 
   category: ProjectCategory;
   tags: string[];
+
   location: ProjectLocation;
   projectValue: ProjectValue;
   timeline: ProjectTimeline;
@@ -67,6 +68,7 @@ export interface Project {
   displayOnHomeHero: boolean;
 }
 
+/* INDUSTRY TYPE */
 export interface Industry {
   id: string;
   title: string;
