@@ -9,15 +9,6 @@ export interface ProjectCategory {
   secondary: string[];
 }
 
-export interface EntityItem {
-  name: string;
-  file?: string;
-  type: "client" | "authority" | "partner";
-  group: string;                 // ✅ REQUIRED
-  subtitle?: string;
-  isTextOnly?: boolean;
-}
-
 export interface ProjectValue {
   amount: number;
   currency: string;
@@ -36,11 +27,11 @@ export interface ProjectLocation {
   country: string;
 }
 
-/* GROUP BASED MAPPING */
+/* ✅ USED FOR FILTERING BY LOGO */
 export interface ProjectEntities {
-  clients?: string[];
-  authorities?: string[];
-  partners?: string[];
+  clients?: string[];      // ex: ["WIPRO"]
+  authorities?: string[];  // ex: ["GOVT_KA"]
+  partners?: string[];     // ex: ["IVRCL"]
 }
 
 export interface Project {
@@ -49,32 +40,29 @@ export interface Project {
   title: string;
   vertical: string;
 
-  client: ProjectClient;
-  entities?: ProjectEntities;
+  client: ProjectClient;        // ❌ NO GROUP HERE
+  entities?: ProjectEntities;   // ✅ GROUP GOES HERE
 
   category: ProjectCategory;
   tags: string[];
-
   location: ProjectLocation;
   projectValue: ProjectValue;
   timeline: ProjectTimeline;
-
   heroImage: string;
   gallery: string[];
   scopeOfWork: string[];
   description: string;
-
   isFeatured: boolean;
   displayOnHomeHero: boolean;
 }
 
-/* INDUSTRY TYPE */
-export interface Industry {
-  id: string;
-  title: string;
-  slug: string;
-  description: string;
-  iconName: string;
-  image: string;
-  categoryMapping?: string;
+/* ENTITY LOGO DATA */
+
+export interface EntityItem {
+  name: string;
+  file?: string;
+  type: "client" | "authority" | "partner";
+  group: string;          // ✅ ONLY ENTITIES HAVE GROUP
+  subtitle?: string;
+  isTextOnly?: boolean;
 }
