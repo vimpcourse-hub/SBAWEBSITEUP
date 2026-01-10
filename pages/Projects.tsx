@@ -21,7 +21,7 @@ const VERTICALS = [
 const Projects: React.FC = () => {
   const query = useQuery();
 
-  /* ---------- URL FILTERS ---------- */
+  /* ---------- URL PARAMS ---------- */
   const urlVertical = query.get("vertical") || "ALL";
   const urlGroup = query.get("group") || "ALL";
 
@@ -31,17 +31,24 @@ const Projects: React.FC = () => {
   const [selectedGroup, setSelectedGroup] = useState(urlGroup);
   const [selectedClient, setSelectedClient] = useState("ALL");
 
-  /* ---------- SYNC URL ---------- */
+  /* ---------- SYNC URL → STATE ---------- */
   useEffect(() => {
     setSelectedVertical(urlVertical);
     setSelectedGroup(urlGroup);
+
+    // Reset conflicting filters
+    if (urlGroup !== "ALL") {
+      setSelectedClient("ALL");
+    }
   }, [urlVertical, urlGroup]);
 
   /* ---------- DROPDOWNS ---------- */
 
   const allCategories = useMemo(() => {
     const set = new Set<string>();
-    PROJECTS.forEach(p => set.add(p.category.primary.toUpperCase()));
+    PROJECTS.forEach(p =>
+      set.add(p.category.primary.toUpperCase())
+    );
     return Array.from(set).sort();
   }, []);
 
@@ -50,12 +57,11 @@ const Projects: React.FC = () => {
   }, []);
 
   /* ---------- FILTER LOGIC ---------- */
-
   const filteredProjects = useMemo(() => {
     return PROJECTS.filter(p => {
       const matchVertical =
         selectedVertical === "ALL" ||
-        p.vertical === selectedVertical;
+        p.vertical.toUpperCase() === selectedVertical.toUpperCase();
 
       const matchCategory =
         selectedCategory === "ALL" ||
@@ -71,9 +77,19 @@ const Projects: React.FC = () => {
         selectedClient === "ALL" ||
         p.client.name === selectedClient;
 
-      return matchVertical && matchCategory && matchGroup && matchClient;
+      return (
+        matchVertical &&
+        matchCategory &&
+        matchGroup &&
+        matchClient
+      );
     });
-  }, [selectedVertical, selectedCategory, selectedGroup, selectedClient]);
+  }, [
+    selectedVertical,
+    selectedCategory,
+    selectedGroup,
+    selectedClient
+  ]);
 
   /* ---------- CLEAR ---------- */
   const clearFilters = () => {
@@ -111,7 +127,10 @@ const Projects: React.FC = () => {
             </div>
             <select
               value={selectedVertical}
-              onChange={e => setSelectedVertical(e.target.value)}
+              onChange={e => {
+                setSelectedVertical(e.target.value);
+                setSelectedGroup("ALL");
+              }}
               className="w-full border border-gray-200 px-4 py-3 text-sm bg-white"
             >
               {VERTICALS.map(v => (
@@ -137,14 +156,17 @@ const Projects: React.FC = () => {
             </select>
           </div>
 
-          {/* CLIENT */}
+          {/* CLIENT / AUTHORITY / PARTNER */}
           <div>
             <div className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2">
               Client / Authority / Partner
             </div>
             <select
               value={selectedClient}
-              onChange={e => setSelectedClient(e.target.value)}
+              onChange={e => {
+                setSelectedClient(e.target.value);
+                setSelectedGroup("ALL");
+              }}
               className="w-full border border-gray-200 px-4 py-3 text-sm bg-white"
             >
               <option value="ALL">ALL</option>
