@@ -3,7 +3,6 @@ import { Industry } from "../types";
 export const INDUSTRIES: Industry[] = [
   {
     id: "fmcg",
-    slug: "fmcg",
     title: "FMCG & Consumer Goods",
     description: "Industrial infrastructure for FMCG and consumer product companies.",
     iconName: "Package",
@@ -11,7 +10,6 @@ export const INDUSTRIES: Industry[] = [
   },
   {
     id: "automobile",
-    slug: "automobile",
     title: "Automobile & Auto Ancillaries",
     description: "Manufacturing and R&D facilities for automotive companies.",
     iconName: "Settings",
@@ -19,7 +17,6 @@ export const INDUSTRIES: Industry[] = [
   },
   {
     id: "machine",
-    slug: "machine-spm",
     title: "Machine & SPM",
     description: "Heavy engineering, machine tooling, and SPM infrastructure projects.",
     iconName: "Truck",
@@ -27,7 +24,6 @@ export const INDUSTRIES: Industry[] = [
   },
   {
     id: "public",
-    slug: "public-government",
     title: "Public & Government",
     description: "Government, public sector, and infrastructure development projects.",
     iconName: "HardHat",
@@ -35,7 +31,6 @@ export const INDUSTRIES: Industry[] = [
   },
   {
     id: "retail",
-    slug: "retail-csr",
     title: "Retail & CSR",
     description: "Retail developments and CSR-led public amenities.",
     iconName: "ShoppingCart",
