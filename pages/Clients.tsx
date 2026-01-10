@@ -1,50 +1,34 @@
-import React from "react";
 import { ENTITIES } from "../data/entities";
 import { Link } from "react-router-dom";
 
-const Clients: React.FC = () => {
+const Clients = () => {
   const items = ENTITIES.filter(
     e => e.type === "client" || e.type === "authority"
   );
 
   return (
-    <div className="pt-20 bg-white">
-
-      <section className="py-24 border-b border-gray-100 text-center">
-        <h1 className="text-4xl md:text-7xl font-bold uppercase tracking-tighter">
-          Our Clients
-        </h1>
+    <div className="pt-20">
+      <section className="py-24 text-center">
+        <h1 className="text-5xl font-bold uppercase">Our Clients</h1>
       </section>
 
       <section className="py-24">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-10">
-          {items.map(entity => (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 px-6">
+          {items.map(e => (
             <Link
-              key={entity.key}
-              to={`/projects?entity=${entity.key}`}
-              className="
-                bg-white border border-gray-100
-                hover:border-blue-900 hover:shadow-xl
-                transition flex flex-col items-center
-                justify-center px-6 py-10 text-center
-              "
+              key={e.key}
+              to={`/projects?entity=${e.key}`}
+              className="border p-6 text-center hover:border-blue-900"
             >
-              {entity.isTextOnly ? (
-                <div className="text-sm font-bold uppercase">
-                  {entity.name}
-                </div>
+              {e.file && !e.isTextOnly ? (
+                <img src={`/images/entities/${e.file}`} className="mx-auto mb-4 max-h-[70px]" />
               ) : (
-                <img
-                  src={`/images/entities/${entity.file}`}
-                  alt={entity.name}
-                  className="max-h-[80px] max-w-[180px] object-contain"
-                />
+                <div className="font-bold text-sm">{e.name}</div>
               )}
             </Link>
           ))}
         </div>
       </section>
-
     </div>
   );
 };
