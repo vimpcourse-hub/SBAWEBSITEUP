@@ -3,6 +3,8 @@ import { ENTITIES } from "../data/entities";
 import { Link } from "react-router-dom";
 
 const ClientCarousel: React.FC = () => {
+
+  // ✅ ONLY real clients
   const items = ENTITIES.filter(e => e.type === "client");
 
   return (
@@ -11,8 +13,8 @@ const ClientCarousel: React.FC = () => {
 
         {[...items, ...items].map((entity, i) => (
           <Link
-            key={`${entity.name}-${i}`}
-            to={`/projects?group=${encodeURIComponent(entity.group)}`}
+            key={`${entity.key}-${i}`}   // ✅ stable + safe
+            to={`/projects?entity=${encodeURIComponent(entity.key)}`} // ✅ correct param
             className="
               mx-3
               w-[180px] h-[110px]
