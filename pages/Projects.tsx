@@ -13,11 +13,12 @@ const VERTICALS = [
   "Machine & SPM",
   "Public & Government",
   "Retail & CSR",
-  "Power & Energy",
+  "Power & Energy"
 ];
 
 const Projects: React.FC = () => {
   const query = useQuery();
+
   const urlVertical = query.get("vertical") || "ALL";
   const urlEntity = query.get("entity") || "ALL";
 
@@ -31,14 +32,13 @@ const Projects: React.FC = () => {
   }, [urlVertical, urlEntity]);
 
   const allCategories = useMemo(() => {
-    return Array.from(
-      new Set(PROJECTS.map(p => p.category.primary.toUpperCase()))
-    ).sort();
+    const set = new Set<string>();
+    PROJECTS.forEach(p => set.add(p.category.primary.toUpperCase()));
+    return Array.from(set);
   }, []);
 
   const allEntities = useMemo(() => {
-    return ENTITIES.map(e => ({ key: e.key, name: e.name }))
-      .sort((a, b) => a.name.localeCompare(b.name));
+    return ENTITIES.map(e => ({ key: e.key, name: e.name }));
   }, []);
 
   const filteredProjects = useMemo(() => {
@@ -60,61 +60,43 @@ const Projects: React.FC = () => {
     });
   }, [selectedVertical, selectedCategory, selectedEntity]);
 
-  const clearFilters = () => {
-    setSelectedVertical("ALL");
-    setSelectedCategory("ALL");
-    setSelectedEntity("ALL");
-    window.history.replaceState({}, "", "/projects");
-  };
-
   return (
     <div className="pt-20 bg-white">
-      {/* FILTER BAR */}
-      <section className="py-10 bg-gray-50 border-b">
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-6">
 
-          <select value={selectedVertical}
-            onChange={e => setSelectedVertical(e.target.value)}
-            className="border px-4 py-3">
+      <section className="py-10 bg-gray-50 border-b">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-6">
+
+          <select value={selectedVertical} onChange={e => setSelectedVertical(e.target.value)}>
             {VERTICALS.map(v => <option key={v}>{v}</option>)}
           </select>
 
-          <select value={selectedCategory}
-            onChange={e => setSelectedCategory(e.target.value)}
-            className="border px-4 py-3">
-            <option>ALL</option>
+          <select value={selectedCategory} onChange={e => setSelectedCategory(e.target.value)}>
+            <option value="ALL">ALL</option>
             {allCategories.map(c => <option key={c}>{c}</option>)}
           </select>
 
-          <select value={selectedEntity}
-            onChange={e => setSelectedEntity(e.target.value)}
-            className="border px-4 py-3">
+          <select value={selectedEntity} onChange={e => setSelectedEntity(e.target.value)}>
             <option value="ALL">ALL</option>
             {allEntities.map(e => (
               <option key={e.key} value={e.key}>{e.name}</option>
             ))}
           </select>
 
-          <button onClick={clearFilters}
-            className="border font-bold uppercase text-xs">
+          <button onClick={() => window.location.href = "/projects"}>
             Clear Filters
           </button>
 
         </div>
       </section>
 
-      {/* GRID */}
-      <section className="py-20 max-w-7xl mx-auto px-6">
-        {filteredProjects.length === 0 ? (
-          <div className="text-center text-gray-400">No projects found</div>
-        ) : (
-          <div className="grid md:grid-cols-3 gap-12">
-            {filteredProjects.map(p => (
-              <ProjectCard key={p.id} project={p} />
-            ))}
-          </div>
-        )}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12">
+          {filteredProjects.map(p => (
+            <ProjectCard key={p.id} project={p} />
+          ))}
+        </div>
       </section>
+
     </div>
   );
 };
