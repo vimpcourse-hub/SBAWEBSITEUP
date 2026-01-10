@@ -1,100 +1,131 @@
 export interface EntityItem {
-  name: string;
-  file?: string;
+  key: string;                           // 🔑 canonical ID (used in projects)
+  name: string;                          // Display name
   type: "client" | "authority" | "partner";
-  group: string;                // ✅ REQUIRED FOR AUTO FILTER
-  subtitle?: string;
-  isTextOnly?: boolean;
+  parent?: string;                      // Govt hierarchy only
+  file?: string;                        // Logo (optional)
+  subtitle?: string;                    // Dept / Govt info
+  isTextOnly?: boolean;                 // No logo
 }
 
 export const ENTITIES: EntityItem[] = [
 
-  // ===== CLIENTS =====
-  { name: "Berger Paints Limited", file: "berger.png", type: "client", group: "BERGER" },
+  /* ===================== CLIENTS ===================== */
 
-  { name: "Wipro Enterprises Limited", file: "wipro.png", type: "client", group: "WIPRO" },
+  { key: "BERGER", name: "Berger Paints Limited", type: "client", file: "berger.png" },
+  { key: "WIPRO", name: "Wipro Enterprises Limited", type: "client", file: "wipro.png" },
+  { key: "BRITISH", name: "British Paints", type: "client", file: "british-paints.png" },
+  { key: "JOYALUKKAS", name: "Joyalukkas", type: "client", file: "joyalukkas.png" },
+  { key: "SUZLON", name: "Suzlon Infrastructure Limited", type: "client", file: "suzlon.png" },
+  { key: "BHORUKA", name: "Bhoruka Power Corporation", type: "client", file: "bhoruka.jpg" },
+  { key: "TIRUPATI", name: "Tirupati Steels", type: "client", file: "tirupati-steels.png" },
+  { key: "MB_SMELTERS", name: "M.B. Smelters", type: "client", isTextOnly: true },
 
-  { name: "British Paints", file: "british-paints.png", type: "client", group: "BRITISH" },
-
-  { name: "Joyalukkas", file: "joyalukkas.png", type: "client", group: "JOYALUKKAS" },
-
-  { name: "Suzlon Infrastructure Limited", file: "suzlon.png", type: "client", group: "SUZLON" },
-
-  { name: "Bhoruka Power Corporation", file: "bhoruka.jpg", type: "client", group: "BHORUKA" },
-
-  { name: "Tirupati Steels", file: "tirupati-steels.png", type: "client", group: "TIRUPATI" },
-
-  { name: "M.B. Smelters", type: "client", isTextOnly: true, group: "MB_SMELTERS" },
-
-
-  // ===== GOVERNMENT / AUTHORITIES =====
+  /* ===================== GOVERNMENT (PARENTS – FILTER ONLY) ===================== */
 
   {
+    key: "govt-karnataka",
+    name: "Government of Karnataka",
+    type: "authority",
+    file: "govt-karnataka.png"
+  },
+  {
+    key: "govt-andhra-pradesh",
+    name: "Government of Andhra Pradesh",
+    type: "authority",
+    file: "govt-andhra-pradesh.jpg"
+  },
+
+  /* ===================== KARNATAKA GOVERNMENT (CHILDREN) ===================== */
+
+  {
+    key: "pwd-ka",
     name: "Public Works Department",
     subtitle: "Government of Karnataka",
-    file: "govt-karnataka.png",
-    type: "authority",
-    group: "GOVT_KA"
+    parent: "govt-karnataka",
+    type: "authority"
   },
-
   {
+    key: "kiadb",
     name: "KIADB",
     subtitle: "Government of Karnataka",
-    file: "kiadb.png",
+    parent: "govt-karnataka",
     type: "authority",
-    group: "KIADB"
+    file: "kiadb.png"
   },
-
   {
-    name: "Indian Railways",
-    subtitle: "Government of India",
-    file: "irctc.png",
-    type: "authority",
-    group: "RAILWAYS"
-  },
-
-  {
-    name: "Government of Andhra Pradesh",
-    file: "govt-andhra-pradesh.jpg",
-    type: "authority",
-    group: "GOVT_AP"
-  },
-
-  {
+    key: "hospet-mc",
     name: "Hospet Municipal Council",
     subtitle: "Government of Karnataka",
+    parent: "govt-karnataka",
     type: "authority",
-    isTextOnly: true,
-    group: "GOVT_KA"
+    isTextOnly: true
   },
-
   {
+    key: "chitradurga-mc",
     name: "Chitradurga Municipal Council",
     subtitle: "Government of Karnataka",
+    parent: "govt-karnataka",
     type: "authority",
-    isTextOnly: true,
-    group: "GOVT_KA"
+    isTextOnly: true
   },
+  {
+    key: "gttc",
+    name: "Govt Tool Room & Training Centre",
+    subtitle: "Government of Karnataka",
+    parent: "govt-karnataka",
+    type: "authority",
+    isTextOnly: true
+  },
+  {
+    key: "irrigation-ka",
+    name: "Irrigation Department",
+    subtitle: "Government of Karnataka",
+    parent: "govt-karnataka",
+    type: "authority"
+  },
+
+  /* ===================== ANDHRA PRADESH GOVERNMENT (CHILDREN) ===================== */
 
   {
-    name: "GTTC",
-    subtitle: "Govt Tool Room & Training Centre",
+    key: "hindupur-municipality",
+    name: "Hindupur Municipality",
+    subtitle: "Government of Andhra Pradesh",
+    parent: "govt-andhra-pradesh",
     type: "authority",
-    isTextOnly: true,
-    group: "GOVT_KA"
+    isTextOnly: true
+  },
+  {
+    key: "water-board-ap",
+    name: "Government Water Board",
+    subtitle: "Government of Andhra Pradesh",
+    parent: "govt-andhra-pradesh",
+    type: "authority"
+  },
+  {
+    key: "pwd-ap",
+    name: "Public Works Department",
+    subtitle: "Government of Andhra Pradesh",
+    parent: "govt-andhra-pradesh",
+    type: "authority"
   },
 
+  /* ===================== CENTRAL GOVERNMENT ===================== */
 
-  // ===== PARTNERS / JV =====
+  {
+    key: "indian-railways",
+    name: "Indian Railways",
+    subtitle: "Government of India",
+    type: "authority",
+    file: "indian-railways.png"
+  },
 
-  { name: "NSL Constructions Private Limited", file: "nsl.png", type: "partner", group: "NSL" },
+  /* ===================== PARTNERS / JV ===================== */
 
-  { name: "IVRCL", file: "ivrcl.png", type: "partner", group: "IVRCL" },
-
-  { name: "GVPR Engineers Limited", file: "gvpr.png", type: "partner", group: "GVPR" },
-
-  { name: "Larsen & Toubro", file: "lnt.png", type: "partner", group: "LNT" },
-
-  { name: "Shashank Constructions", type: "partner", isTextOnly: true, group: "SHASHANK" },
+  { key: "NSL", name: "NSL Constructions Private Limited", type: "partner", file: "nsl.png" },
+  { key: "IVRCL", name: "IVRCL", type: "partner", file: "ivrcl.png" },
+  { key: "GVPR", name: "GVPR Engineers Limited", type: "partner", file: "gvpr.png" },
+  { key: "LNT", name: "Larsen & Toubro", type: "partner", file: "lnt.png" },
+  { key: "SHASHANK", name: "Shashank Constructions", type: "partner", isTextOnly: true }
 
 ];
