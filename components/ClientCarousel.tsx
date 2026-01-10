@@ -29,7 +29,7 @@ const ClientCarousel: React.FC = () => {
           {[...items, ...items].map((entity, i) => (
             <Link
               key={i}
-              to={`/projects?client=${encodeURIComponent(entity.name)}`}
+to={`/projects?group=${entity.group}`}
               className="mx-4 w-[280px] h-44 flex flex-col items-center justify-center bg-gray-50 border border-gray-100 hover:border-blue-900 hover:bg-white transition-all duration-500 shadow-sm hover:shadow-xl px-6 text-center"
             >
               {entity.isTextOnly ? (
