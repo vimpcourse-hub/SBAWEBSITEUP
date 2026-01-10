@@ -2,6 +2,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import ProjectCard from "../components/ProjectCard";
 import { PROJECTS } from "../data/projects";
+import { ENTITIES } from "../data/entities";
 
 /* ---------- HELPERS ---------- */
 const useQuery = () => new URLSearchParams(useLocation().search);
@@ -23,52 +24,38 @@ const Projects: React.FC = () => {
   /* ---------- URL FILTERS ---------- */
   const urlVertical = query.get("vertical") || "ALL";
   const urlGroup = query.get("group") || "ALL";
-  const urlClient = query.get("client") || "ALL";
 
   /* ---------- STATE ---------- */
-  const [selectedVertical, setSelectedVertical] = useState("ALL");
+  const [selectedVertical, setSelectedVertical] = useState(urlVertical);
   const [selectedCategory, setSelectedCategory] = useState("ALL");
-  const [selectedGroup, setSelectedGroup] = useState("ALL");
+  const [selectedGroup, setSelectedGroup] = useState(urlGroup);
   const [selectedClient, setSelectedClient] = useState("ALL");
 
-  /* ---------- SYNC URL FILTERS ---------- */
+  /* ---------- SYNC URL ---------- */
   useEffect(() => {
-    if (urlGroup !== "ALL") {
-      setSelectedVertical("ALL");
-      setSelectedCategory("ALL");
-      setSelectedClient("ALL");
-      setSelectedGroup(urlGroup);
-    } else {
-      setSelectedVertical(urlVertical);
-      setSelectedGroup(urlGroup);
-      setSelectedClient(urlClient);
-    }
-  }, [urlVertical, urlGroup, urlClient]);
+    setSelectedVertical(urlVertical);
+    setSelectedGroup(urlGroup);
+  }, [urlVertical, urlGroup]);
 
-  /* ---------- DROPDOWN DATA ---------- */
+  /* ---------- DROPDOWNS ---------- */
+
   const allCategories = useMemo(() => {
     const set = new Set<string>();
     PROJECTS.forEach(p => set.add(p.category.primary.toUpperCase()));
     return Array.from(set).sort();
   }, []);
 
-  const allGroups = useMemo(() => {
-    const set = new Set<string>();
-    PROJECTS.forEach(p => {
-      p.entities?.clients?.forEach(x => set.add(x));
-      p.entities?.authorities?.forEach(x => set.add(x));
-      p.entities?.partners?.forEach(x => set.add(x));
-    });
-    return Array.from(set).sort();
+  const allClients = useMemo(() => {
+    return ENTITIES.map(e => e.name).sort();
   }, []);
 
   /* ---------- FILTER LOGIC ---------- */
-  const filteredProjects = useMemo(() => {
-    const sv = selectedVertical.toUpperCase();
 
+  const filteredProjects = useMemo(() => {
     return PROJECTS.filter(p => {
       const matchVertical =
-        sv === "ALL" || p.vertical.toUpperCase() === sv;
+        selectedVertical === "ALL" ||
+        p.vertical === selectedVertical;
 
       const matchCategory =
         selectedCategory === "ALL" ||
@@ -77,8 +64,8 @@ const Projects: React.FC = () => {
       const matchGroup =
         selectedGroup === "ALL" ||
         p.entities?.clients?.includes(selectedGroup) ||
-        p.entities?.authorities?.includes(selectedGroup) ||
-        p.entities?.partners?.includes(selectedGroup);
+        p.entities?.partners?.includes(selectedGroup) ||
+        p.entities?.authorities?.includes(selectedGroup);
 
       const matchClient =
         selectedClient === "ALL" ||
@@ -114,8 +101,8 @@ const Projects: React.FC = () => {
       </section>
 
       {/* FILTER BAR */}
-      <section className="py-12 bg-gray-50 border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <section className="py-10 bg-gray-50 border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-6">
 
           {/* VERTICAL */}
           <div>
@@ -150,21 +137,19 @@ const Projects: React.FC = () => {
             </select>
           </div>
 
-          {/* GROUP FILTER */}
+          {/* CLIENT */}
           <div>
             <div className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2">
-              FILTER BY CLIENT / AUTHORITY / PARTNER
+              Client / Authority / Partner
             </div>
             <select
-              value={selectedGroup}
-              onChange={e => setSelectedGroup(e.target.value)}
+              value={selectedClient}
+              onChange={e => setSelectedClient(e.target.value)}
               className="w-full border border-gray-200 px-4 py-3 text-sm bg-white"
             >
               <option value="ALL">ALL</option>
-              {allGroups.map(g => (
-                <option key={g} value={g}>
-                  {g.replaceAll("_", " ")}
-                </option>
+              {allClients.map(c => (
+                <option key={c} value={c}>{c}</option>
               ))}
             </select>
           </div>
@@ -181,13 +166,6 @@ const Projects: React.FC = () => {
 
         </div>
       </section>
-
-      {/* ACTIVE FILTER INFO */}
-      {selectedGroup !== "ALL" && (
-        <div className="max-w-7xl mx-auto px-6 pt-10 text-sm font-semibold text-blue-800">
-          Showing projects for: {selectedGroup.replaceAll("_", " ")}
-        </div>
-      )}
 
       {/* PROJECT GRID */}
       <section className="py-20">
