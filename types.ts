@@ -1,3 +1,7 @@
+// types.ts
+
+/* ================= PROJECT ================= */
+
 export interface ProjectClient {
   name: string;
   slug: string;
@@ -27,11 +31,11 @@ export interface ProjectLocation {
   country: string;
 }
 
-/* ✅ USED FOR FILTERING BY LOGO */
+/* ✅ USED FOR LOGO GROUP FILTERING */
 export interface ProjectEntities {
-  clients?: string[];      // ex: ["WIPRO"]
-  authorities?: string[];  // ex: ["GOVT_KA"]
-  partners?: string[];     // ex: ["IVRCL"]
+  clients?: string[];      // ["WIPRO"]
+  authorities?: string[];  // ["GOVT_KA"]
+  partners?: string[];     // ["IVRCL"]
 }
 
 export interface Project {
@@ -40,8 +44,8 @@ export interface Project {
   title: string;
   vertical: string;
 
-  client: ProjectClient;        // ❌ NO GROUP HERE
-  entities?: ProjectEntities;   // ✅ GROUP GOES HERE
+  client: ProjectClient;
+  entities?: ProjectEntities;
 
   category: ProjectCategory;
   tags: string[];
@@ -56,13 +60,25 @@ export interface Project {
   displayOnHomeHero: boolean;
 }
 
-/* ENTITY LOGO DATA */
+/* ================= ENTITY LOGOS ================= */
 
 export interface EntityItem {
   name: string;
   file?: string;
   type: "client" | "authority" | "partner";
-  group: string;          // ✅ ONLY ENTITIES HAVE GROUP
+  group: string;          // ✅ GROUP ONLY HERE
   subtitle?: string;
   isTextOnly?: boolean;
+}
+
+/* ================= INDUSTRIES ================= */
+
+export interface Industry {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  iconName: string;
+  image: string;
+  categoryMapping?: string;
 }
