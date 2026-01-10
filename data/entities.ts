@@ -117,7 +117,7 @@ export const ENTITIES: EntityItem[] = [
     name: "Indian Railways",
     subtitle: "Government of India",
     type: "authority",
-    file: "indian-railways.png"
+    file: "irctc.png"
   },
 
   /* ===================== PARTNERS / JV ===================== */
