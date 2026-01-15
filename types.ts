@@ -1,5 +1,9 @@
 // types.ts
 
+/* =========================
+   PROJECT-RELATED TYPES
+   ========================= */
+
 export interface ProjectClient {
   name: string;
   slug: string;
@@ -47,27 +51,40 @@ export interface Project {
   category: ProjectCategory;
   tags: string[];
   location: ProjectLocation;
+
   projectValue: ProjectValue;
   timeline: ProjectTimeline;
+
   heroImage: string;
   gallery: string[];
   scopeOfWork: string[];
   description: string;
+
   isFeatured: boolean;
   displayOnHomeHero: boolean;
 }
 
-/* LOGO ENTITY */
+/* =========================
+   ENTITY (CLIENT / AUTHORITY / PARTNER)
+   ========================= */
+
 export interface EntityItem {
+  key: string;                         // REQUIRED (used everywhere)
   name: string;
-  file?: string;
   type: "client" | "authority" | "partner";
-  group: string;
-  subtitle?: string;
-  isTextOnly?: boolean;
+
+  file?: string;                       // logo image
+  subtitle?: string;                   // used in ClientAuthorityCarousel
+  isTextOnly?: boolean;                // text-only rendering
+
+  group?: string;                      // logical grouping
+  parent?: string;                     // used in Projects.tsx entity expansion
 }
 
-/* INDUSTRY */
+/* =========================
+   INDUSTRY
+   ========================= */
+
 export interface Industry {
   id: string;
   title: string;
