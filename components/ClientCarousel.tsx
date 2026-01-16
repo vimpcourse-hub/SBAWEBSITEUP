@@ -2,25 +2,86 @@ import { ENTITIES } from "../data/entities";
 import { Link } from "react-router-dom";
 
 const ClientCarousel = () => {
-  const items = ENTITIES.filter(e => e.type === "client");
+
+  // OPTION B: ALL CLIENTS + AUTHORITIES TOGETHER
+  const items = ENTITIES.filter(
+    e => e.type === "client" || e.type === "authority"
+  );
 
   return (
-    <div className="py-20 overflow-hidden bg-white">
-      <div className="flex animate-scroll whitespace-nowrap">
-        {[...items, ...items].map((e, i) => (
-          <Link
-            key={e.key + i}
-            to={`/projects?entity=${e.key}`}
-            className="mx-4 w-[220px] h-[130px] flex items-center justify-center border hover:border-blue-900"
-          >
-            {e.file ? (
-              <img src={`/images/entities/${e.file}`} className="max-h-[70px]" />
-            ) : (
-              <span className="font-bold text-sm">{e.name}</span>
-            )}
-          </Link>
-        ))}
+    <div className="py-24 bg-white border-t border-slate-100 overflow-hidden">
+
+      {/* HEADING */}
+      <div className="max-w-7xl mx-auto px-6 mb-14 flex flex-col md:flex-row md:items-end justify-between">
+        <div>
+          <h2 className="text-xs font-bold text-blue-900 uppercase tracking-[0.3em] mb-4">
+            Clients & Government Authorities
+          </h2>
+          <h3 className="text-4xl font-bold text-gray-900 uppercase tracking-tighter">
+            Trusted by Industry & Public Institutions
+          </h3>
+        </div>
+        <p className="text-gray-500 text-sm max-w-md mt-4 md:mt-0 font-light">
+          Corporate leaders and state infrastructure departments across India.
+        </p>
       </div>
+
+      {/* SLIDER */}
+      <div className="flex overflow-hidden relative">
+        <div className="flex animate-scroll-clients whitespace-nowrap py-6">
+
+          {[...items, ...items].map((e, i) => (
+            <Link
+              key={`${e.key}-${i}`}
+              to={`/projects?entity=${e.key}`}
+              className="mx-4 w-[260px] h-44 flex flex-col items-center justify-center bg-gray-50 border border-gray-100 hover:border-blue-900 hover:bg-white transition-all duration-500 shadow-sm hover:shadow-xl px-6 text-center"
+            >
+
+              {/* LOGO / TEXT */}
+              {e.file && !e.isTextOnly ? (
+                <img
+                  src={`/images/entities/${e.file}`}
+                  className="max-h-14 object-contain mb-3"
+                  alt={e.name}
+                />
+              ) : (
+                <div className="text-sm font-bold uppercase mb-2">
+                  {e.name}
+                </div>
+              )}
+
+              {/* NAME */}
+              <div className="text-[11px] font-bold uppercase tracking-wide text-gray-900">
+                {e.name}
+              </div>
+
+              {/* SUBTITLE (GOVT / PARENT) */}
+              {e.subtitle && (
+                <div className="text-[10px] font-bold uppercase tracking-widest text-blue-900 mt-1">
+                  {e.subtitle}
+                </div>
+              )}
+
+            </Link>
+          ))}
+
+        </div>
+      </div>
+
+      {/* ANIMATION */}
+      <style>{`
+        @keyframes scroll-clients {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-scroll-clients {
+          animation: scroll-clients 45s linear infinite;
+        }
+        .animate-scroll-clients:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+
     </div>
   );
 };
