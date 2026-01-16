@@ -30,8 +30,8 @@ const ClientAuthorityCarousel: React.FC = () => {
 
           {[...items, ...items].map((entity, i) => (
             <Link
-              key={i}
-              to={`/projects?entity=${encodeURIComponent(entity.name)}`}
+              key={`${entity.key}-${i}`}
+              to={`/projects?entity=${entity.key}`}
               className="mx-4 w-[280px] h-44 flex flex-col items-center justify-center bg-gray-50 border border-gray-100 hover:border-blue-900 hover:bg-white transition-all duration-500 shadow-sm hover:shadow-xl px-6 text-center"
             >
 
@@ -49,16 +49,9 @@ const ClientAuthorityCarousel: React.FC = () => {
                 </>
               ) : (
                 /* TEXT CARD */
-                <>
-                  <div className="text-sm font-bold text-gray-900 uppercase">
-                    {entity.name}
-                  </div>
-                  {entity.subtitle && (
-                    <div className="text-[10px] mt-2 uppercase tracking-widest text-gray-400">
-                      {entity.subtitle}
-                    </div>
-                  )}
-                </>
+                <div className="text-sm font-bold text-gray-900 uppercase">
+                  {entity.name}
+                </div>
               )}
 
             </Link>
