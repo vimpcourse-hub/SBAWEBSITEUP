@@ -33,11 +33,13 @@ export interface ProjectLocation {
   country: string;
 }
 
+/* ⚠️ OLD STRUCTURE — KEEP ONLY IF YOU STILL USE IT FOR DISPLAY
 export interface ProjectEntities {
   clients?: string[];
   authorities?: string[];
   partners?: string[];
 }
+*/
 
 export interface Project {
   id: string;
@@ -45,8 +47,10 @@ export interface Project {
   title: string;
   vertical: string;
 
+  /* 🔥 SINGLE SOURCE OF TRUTH FOR FILTERING */
+  entityKey: string;   // must match EntityItem.key (BERGER, WIPRO, GOVT_KA, HOSPET_MC etc)
+
   client: ProjectClient;
-  entities?: ProjectEntities;
 
   category: ProjectCategory;
   tags: string[];
@@ -74,11 +78,11 @@ export interface EntityItem {
   type: "client" | "authority" | "partner";
 
   file?: string;                       // logo image
-  subtitle?: string;                   // used in ClientAuthorityCarousel
+  subtitle?: string;                   // Govt / parent label under logo
   isTextOnly?: boolean;                // text-only rendering
 
-  group?: string;                      // logical grouping
-  parent?: string;                     // used in Projects.tsx entity expansion
+  group?: string;                      // optional logical grouping
+  parent?: string;                     // parent govt (for archive expansion)
 }
 
 /* =========================
