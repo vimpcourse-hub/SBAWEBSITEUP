@@ -1,5 +1,6 @@
 import { PROJECTS } from "../data/projects";
 import { ENTITIES } from "../data/entities";
+import type { Project } from "../types";
 
 export interface EntityStat {
   key: string;
@@ -11,20 +12,20 @@ export interface EntityStat {
 export const getEntityProjectStats = (): EntityStat[] => {
   const stats: Record<string, number> = {};
 
-  // init
+  // init all entities with 0
   ENTITIES.forEach(e => {
     stats[e.key] = 0;
   });
 
-  PROJECTS.forEach(p => {
+  PROJECTS.forEach((p: Project) => {
     // client / authority
     if (stats[p.entityKey] !== undefined) {
       stats[p.entityKey]++;
     }
 
     // partner (optional)
-    if ((p as any).partnerKey && stats[(p as any).partnerKey] !== undefined) {
-      stats[(p as any).partnerKey]++;
+    if (p.partnerKey && stats[p.partnerKey] !== undefined) {
+      stats[p.partnerKey]++;
     }
   });
 
