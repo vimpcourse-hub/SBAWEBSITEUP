@@ -21,9 +21,9 @@ const VERTICALS = [
 const Projects: React.FC = () => {
   const query = useQuery();
 
-  /* ---------- URL FILTER ---------- */
+  /* ---------- URL FILTERS ---------- */
   const urlVertical = query.get("vertical") || "ALL";
-  const urlEntity = query.get("entity") || "ALL"; // from logo click
+  const urlEntity = query.get("entity") || "ALL";
 
   /* ---------- STATE ---------- */
   const [selectedVertical, setSelectedVertical] = useState("ALL");
@@ -80,15 +80,20 @@ const Projects: React.FC = () => {
         selectedCategory === "ALL" ||
         p.category.primary.toUpperCase() === selectedCategory;
 
-      /* ENTITY (LOGO / DROPDOWN) */
+      /* ENTITY + PARTNER + PARENT GOVT */
       let matchEntity = true;
 
       if (selectedEntity !== "ALL") {
         const children = parentMap[selectedEntity];
+
         if (children) {
-          matchEntity = children.includes(p.entityKey);
+          matchEntity =
+            children.includes(p.entityKey) ||
+            (p.partnerKey ? children.includes(p.partnerKey) : false);
         } else {
-          matchEntity = p.entityKey === selectedEntity;
+          matchEntity =
+            p.entityKey === selectedEntity ||
+            p.partnerKey === selectedEntity;
         }
       }
 
