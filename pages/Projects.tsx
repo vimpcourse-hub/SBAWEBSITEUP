@@ -23,12 +23,12 @@ const Projects: React.FC = () => {
 
   /* ---------- URL FILTER ---------- */
   const urlVertical = query.get("vertical") || "ALL";
-  const urlEntity = query.get("entity") || "ALL"; // 👈 from logo click
+  const urlEntity = query.get("entity") || "ALL"; // from logo click
 
   /* ---------- STATE ---------- */
   const [selectedVertical, setSelectedVertical] = useState("ALL");
   const [selectedCategory, setSelectedCategory] = useState("ALL");
-  const [selectedEntity, setSelectedEntity] = useState("ALL"); // logo or dropdown
+  const [selectedEntity, setSelectedEntity] = useState("ALL");
 
   /* ---------- SYNC FROM URL ---------- */
   useEffect(() => {
@@ -56,14 +56,12 @@ const Projects: React.FC = () => {
 
   const parentMap = useMemo(() => {
     const map: Record<string, string[]> = {};
-
     ENTITIES.forEach(e => {
       if (e.parent) {
         if (!map[e.parent]) map[e.parent] = [];
         map[e.parent].push(e.key);
       }
     });
-
     return map;
   }, []);
 
@@ -82,13 +80,11 @@ const Projects: React.FC = () => {
         selectedCategory === "ALL" ||
         p.category.primary.toUpperCase() === selectedCategory;
 
-      /* ENTITY FILTER (LOGO / DROPDOWN) */
+      /* ENTITY (LOGO / DROPDOWN) */
       let matchEntity = true;
 
       if (selectedEntity !== "ALL") {
-        // if parent govt selected → allow all children
         const children = parentMap[selectedEntity];
-
         if (children) {
           matchEntity = children.includes(p.entityKey);
         } else {
@@ -125,7 +121,7 @@ const Projects: React.FC = () => {
       </section>
 
       {/* FILTER BAR */}
-      <section className="py-10 bg-gray-50 border-b border-gray-100">
+      <section id="project-filters" className="py-10 bg-gray-50 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-6">
 
           {/* VERTICAL */}
