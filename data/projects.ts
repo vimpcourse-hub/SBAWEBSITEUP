@@ -319,7 +319,7 @@ export const PROJECTS: Project[] = [
     title: "Slum Upgradation – Chitradurga",
     vertical: "Public & Government",
     entityKey: "CHITRADURGA_MC",
-    partnerKey: "ivrcl", // Sublet Partner
+    partnerKey: "IVRCL", // Sublet Partner
     client: { name: "Chitradurga Municipal Council", slug: "chitradurga", logo: "/images/entities/govt-karnataka.png" },
     category: { primary: "Infrastructure", secondary: [] },
     tags: ["slum", "urban"],
