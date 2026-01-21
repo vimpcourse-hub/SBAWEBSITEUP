@@ -57,7 +57,7 @@ export const ENTITIES: EntityItem[] = [
 
   /* ================= CENTRAL GOVT ================= */
 
-  { key: "INDIAN_RAILWAYS", name: "Indian Railways", type: "authority", file: "indian-railways.png", subtitle: "Govt of India" },
+  { key: "INDIAN_RAILWAYS", name: "Indian Railways", type: "authority", file: "indian-irctc.png", subtitle: "Govt of India" },
 
   /* ================= PARTNERS ================= */
 
