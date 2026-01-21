@@ -41,8 +41,11 @@ export interface Project {
   title: string;
   vertical: string;
 
-  /** 🔥 single source of truth for entity filtering */
+  /** 🔥 single source of truth for filtering (client / authority) */
   entityKey: string; // must match EntityItem.key
+
+  /** 🤝 JV / subcontract partner (optional) */
+  partnerKey?: string; // must match EntityItem.key
 
   client: ProjectClient;
 
