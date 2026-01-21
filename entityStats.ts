@@ -1,6 +1,8 @@
+// src/utils/entityStats.ts
+
 import { PROJECTS } from "../data/projects";
 import { ENTITIES } from "../data/entities";
-import type { Project } from "../types";
+import type { Project, EntityItem } from "../types";
 
 export interface EntityStat {
   key: string;
@@ -9,27 +11,31 @@ export interface EntityStat {
   count: number;
 }
 
+/**
+ * Returns how many projects are linked to each entity
+ * (client / authority / partner)
+ */
 export const getEntityProjectStats = (): EntityStat[] => {
   const stats: Record<string, number> = {};
 
-  // init all entities with 0
-  ENTITIES.forEach(e => {
+  // initialize all entities with 0
+  ENTITIES.forEach((e: EntityItem) => {
     stats[e.key] = 0;
   });
 
+  // count projects by entityKey + partnerKey
   PROJECTS.forEach((p: Project) => {
-    // client / authority
     if (stats[p.entityKey] !== undefined) {
       stats[p.entityKey]++;
     }
 
-    // partner (optional)
     if (p.partnerKey && stats[p.partnerKey] !== undefined) {
       stats[p.partnerKey]++;
     }
   });
 
-  return ENTITIES.map(e => ({
+  // return combined list
+  return ENTITIES.map((e: EntityItem) => ({
     key: e.key,
     name: e.name,
     type: e.type,
