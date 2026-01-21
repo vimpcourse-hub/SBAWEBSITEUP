@@ -1,5 +1,3 @@
-// types.ts
-
 /* =========================
    PROJECT-RELATED TYPES
    ========================= */
@@ -33,13 +31,9 @@ export interface ProjectLocation {
   country: string;
 }
 
-/* ⚠️ OLD STRUCTURE — KEEP ONLY IF YOU STILL USE IT FOR DISPLAY
-export interface ProjectEntities {
-  clients?: string[];
-  authorities?: string[];
-  partners?: string[];
-}
-*/
+/* =========================
+   PROJECT
+   ========================= */
 
 export interface Project {
   id: string;
@@ -47,13 +41,14 @@ export interface Project {
   title: string;
   vertical: string;
 
-  /* 🔥 SINGLE SOURCE OF TRUTH FOR FILTERING */
-  entityKey: string;   // must match EntityItem.key (BERGER, WIPRO, GOVT_KA, HOSPET_MC etc)
+  /** 🔥 single source of truth for entity filtering */
+  entityKey: string; // must match EntityItem.key
 
   client: ProjectClient;
 
   category: ProjectCategory;
   tags: string[];
+
   location: ProjectLocation;
 
   projectValue: ProjectValue;
@@ -61,6 +56,7 @@ export interface Project {
 
   heroImage: string;
   gallery: string[];
+
   scopeOfWork: string[];
   description: string;
 
@@ -73,16 +69,16 @@ export interface Project {
    ========================= */
 
 export interface EntityItem {
-  key: string;                         // REQUIRED (used everywhere)
+  key: string; // used for filtering & routing
+
   name: string;
   type: "client" | "authority" | "partner";
 
-  file?: string;                       // logo image
-  subtitle?: string;                   // Govt / parent label under logo
-  isTextOnly?: boolean;                // text-only rendering
+  file?: string;        // logo image
+  subtitle?: string;    // small text under logo (eg: Govt of AP)
+  isTextOnly?: boolean; // if true, render text card instead of logo
 
-  group?: string;                      // optional logical grouping
-  parent?: string;                     // parent govt (for archive expansion)
+  parent?: string;      // parent govt (eg: govt-ap)
 }
 
 /* =========================
