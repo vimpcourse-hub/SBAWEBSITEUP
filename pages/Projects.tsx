@@ -21,49 +21,57 @@ const VERTICALS = [
 const Projects: React.FC = () => {
   const query = useQuery();
 
-  /* ---------- URL FILTERS ---------- */
+  /* ---------- URL FILTER ---------- */
   const urlVertical = query.get("vertical") || "ALL";
-  const urlGroup = query.get("group") || "ALL";
+  const urlEntity = query.get("entity") || "ALL"; // 👈 from logo click
 
   /* ---------- STATE ---------- */
   const [selectedVertical, setSelectedVertical] = useState("ALL");
   const [selectedCategory, setSelectedCategory] = useState("ALL");
-  const [selectedGroup, setSelectedGroup] = useState("ALL"); // logo based
-  const [selectedClient, setSelectedClient] = useState("ALL"); // dropdown
+  const [selectedEntity, setSelectedEntity] = useState("ALL"); // logo or dropdown
 
   /* ---------- SYNC FROM URL ---------- */
   useEffect(() => {
     setSelectedVertical(urlVertical);
-    setSelectedGroup(urlGroup);
+    setSelectedEntity(urlEntity);
 
-    // when coming from home/logo, reset others
-    if (urlVertical !== "ALL") {
-      setSelectedCategory("ALL");
-      setSelectedClient("ALL");
-    }
-
-    if (urlGroup !== "ALL") {
-      setSelectedClient("ALL");
+    if (urlEntity !== "ALL") {
       setSelectedCategory("ALL");
     }
-  }, [urlVertical, urlGroup]);
+  }, [urlVertical, urlEntity]);
 
   /* ---------- DROPDOWNS ---------- */
 
   const allCategories = useMemo(() => {
     const set = new Set<string>();
     PROJECTS.forEach(p => set.add(p.category.primary.toUpperCase()));
-    return Array.from(set).sort();
+    return ["ALL", ...Array.from(set).sort()];
   }, []);
 
-  const allClients = useMemo(() => {
-    return ENTITIES.map(e => e.name).sort();
+  const allEntities = useMemo(() => {
+    return ["ALL", ...ENTITIES.map(e => e.key)];
+  }, []);
+
+  /* ---------- PARENT → CHILD MAP ---------- */
+
+  const parentMap = useMemo(() => {
+    const map: Record<string, string[]> = {};
+
+    ENTITIES.forEach(e => {
+      if (e.parent) {
+        if (!map[e.parent]) map[e.parent] = [];
+        map[e.parent].push(e.key);
+      }
+    });
+
+    return map;
   }, []);
 
   /* ---------- FILTER LOGIC ---------- */
 
   const filteredProjects = useMemo(() => {
     return PROJECTS.filter(p => {
+
       /* VERTICAL */
       const matchVertical =
         selectedVertical === "ALL" ||
@@ -74,28 +82,29 @@ const Projects: React.FC = () => {
         selectedCategory === "ALL" ||
         p.category.primary.toUpperCase() === selectedCategory;
 
-      /* LOGO GROUP FILTER */
-      const matchGroup =
-        selectedGroup === "ALL" ||
-        p.entities?.clients?.includes(selectedGroup) ||
-        p.entities?.partners?.includes(selectedGroup) ||
-        p.entities?.authorities?.includes(selectedGroup);
+      /* ENTITY FILTER (LOGO / DROPDOWN) */
+      let matchEntity = true;
 
-      /* DROPDOWN NAME FILTER */
-      const matchClient =
-        selectedClient === "ALL" ||
-        p.client.name === selectedClient;
+      if (selectedEntity !== "ALL") {
+        // if parent govt selected → allow all children
+        const children = parentMap[selectedEntity];
 
-      return matchVertical && matchCategory && matchGroup && matchClient;
+        if (children) {
+          matchEntity = children.includes(p.entityKey);
+        } else {
+          matchEntity = p.entityKey === selectedEntity;
+        }
+      }
+
+      return matchVertical && matchCategory && matchEntity;
     });
-  }, [selectedVertical, selectedCategory, selectedGroup, selectedClient]);
+  }, [selectedVertical, selectedCategory, selectedEntity, parentMap]);
 
   /* ---------- CLEAR ---------- */
   const clearFilters = () => {
     setSelectedVertical("ALL");
     setSelectedCategory("ALL");
-    setSelectedGroup("ALL");
-    setSelectedClient("ALL");
+    setSelectedEntity("ALL");
     window.history.replaceState({}, "", "/projects");
   };
 
@@ -128,8 +137,7 @@ const Projects: React.FC = () => {
               value={selectedVertical}
               onChange={e => {
                 setSelectedVertical(e.target.value);
-                setSelectedGroup("ALL");
-                setSelectedClient("ALL");
+                setSelectedEntity("ALL");
               }}
               className="w-full border border-gray-200 px-4 py-3 text-sm bg-white"
             >
@@ -148,34 +156,40 @@ const Projects: React.FC = () => {
               value={selectedCategory}
               onChange={e => {
                 setSelectedCategory(e.target.value);
-                setSelectedGroup("ALL");
+                setSelectedEntity("ALL");
               }}
               className="w-full border border-gray-200 px-4 py-3 text-sm bg-white"
             >
-              <option value="ALL">ALL</option>
               {allCategories.map(c => (
                 <option key={c} value={c}>{c}</option>
               ))}
             </select>
           </div>
 
-          {/* CLIENT DROPDOWN */}
+          {/* ENTITY */}
           <div>
             <div className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2">
               Client / Authority / Partner
             </div>
             <select
-              value={selectedClient}
+              value={selectedEntity}
               onChange={e => {
-                setSelectedClient(e.target.value);
-                setSelectedGroup("ALL");
+                setSelectedEntity(e.target.value);
+                setSelectedVertical("ALL");
+                setSelectedCategory("ALL");
               }}
               className="w-full border border-gray-200 px-4 py-3 text-sm bg-white"
             >
-              <option value="ALL">ALL</option>
-              {allClients.map(c => (
-                <option key={c} value={c}>{c}</option>
-              ))}
+              {allEntities.map(k => {
+                const label =
+                  k === "ALL"
+                    ? "ALL"
+                    : ENTITIES.find(e => e.key === k)?.name || k;
+
+                return (
+                  <option key={k} value={k}>{label}</option>
+                );
+              })}
             </select>
           </div>
 
