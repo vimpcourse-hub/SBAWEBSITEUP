@@ -1,11 +1,12 @@
 import { ENTITIES } from "../data/entities";
 import { Link } from "react-router-dom";
+import type { EntityItem } from "../types";   // ✅ IMPORTANT
 
 const ClientCarousel = () => {
 
-  // OPTION B: ALL CLIENTS + AUTHORITIES TOGETHER
-  const items = ENTITIES.filter(
-    e => e.type === "client" || e.type === "authority"
+  // ✅ force correct typing so TS knows about `subtitle`
+  const items: EntityItem[] = ENTITIES.filter(
+    (e): e is EntityItem => e.type === "client" || e.type === "authority"
   );
 
   return (
@@ -55,7 +56,7 @@ const ClientCarousel = () => {
                 {e.name}
               </div>
 
-              {/* SUBTITLE (GOVT / PARENT) */}
+              {/* SUBTITLE */}
               {e.subtitle && (
                 <div className="text-[10px] font-bold uppercase tracking-widest text-blue-900 mt-1">
                   {e.subtitle}
