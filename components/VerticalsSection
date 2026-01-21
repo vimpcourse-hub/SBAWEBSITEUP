@@ -1,0 +1,92 @@
+import { Link } from "react-router-dom";
+
+const VERTICALS = [
+  {
+    title: "FMCG & Consumer Goods",
+    desc: "Industrial infrastructure for FMCG and consumer product companies.",
+    image: "/images/verticals/fmcg.png",
+    url: "/projects?vertical=FMCG%20%26%20Consumer%20Goods"
+  },
+  {
+    title: "Automobile & Auto Ancillaries",
+    desc: "Manufacturing and R&D facilities for automotive companies.",
+    image: "/images/verticals/auto.png",
+    url: "/projects?vertical=Automobile%20%26%20Auto%20Ancillaries"
+  },
+  {
+    title: "Machine & SPM",
+    desc: "Heavy engineering, machine tooling, and SPM infrastructure projects.",
+    image: "/images/verticals/machine.png",
+    url: "/projects?vertical=Machine%20%26%20SPM"
+  },
+  {
+    title: "Public & Government",
+    desc: "Government, public sector, and infrastructure development projects.",
+    image: "/images/verticals/govt.png",
+    url: "/projects?vertical=Public%20%26%20Government"
+  },
+  {
+    title: "Retail & CSR",
+    desc: "Retail developments and CSR-led public amenities.",
+    image: "/images/verticals/retail.png",
+    url: "/projects?vertical=Retail%20%26%20CSR"
+  },
+  {
+    title: "Power & Energy",
+    desc: "Renewable and conventional energy infrastructure projects.",
+    image: "/images/verticals/power.png",
+    url: "/projects?vertical=Power%20%26%20Energy"
+  }
+];
+
+const VerticalsSection = () => {
+  return (
+    <section className="py-24 bg-white border-t border-gray-100">
+      <div className="max-w-7xl mx-auto px-6">
+
+        {/* HEADING */}
+        <div className="mb-14 flex flex-col md:flex-row md:items-end justify-between">
+          <div>
+            <h2 className="text-xs font-bold text-blue-900 uppercase tracking-[0.3em] mb-4">
+              Operational Sectors
+            </h2>
+            <h3 className="text-4xl font-bold text-gray-900 uppercase tracking-tighter">
+              Specialized Verticals
+            </h3>
+          </div>
+          <p className="text-gray-500 text-sm max-w-md mt-4 md:mt-0 font-light">
+            Select a sector below to explore verified constructed assets.
+          </p>
+        </div>
+
+        {/* GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {VERTICALS.map(v => (
+            <Link
+              key={v.title}
+              to={v.url}
+              className="group border border-gray-100 hover:border-blue-900 bg-white hover:shadow-xl transition-all duration-500 p-6 flex flex-col"
+            >
+              <img
+                src={v.image}
+                alt={v.title}
+                className="h-40 object-contain mb-6"
+              />
+
+              <h4 className="text-lg font-bold uppercase mb-2 group-hover:text-blue-900">
+                {v.title}
+              </h4>
+
+              <p className="text-sm text-gray-500">
+                {v.desc}
+              </p>
+            </Link>
+          ))}
+        </div>
+
+      </div>
+    </section>
+  );
+};
+
+export default VerticalsSection;
