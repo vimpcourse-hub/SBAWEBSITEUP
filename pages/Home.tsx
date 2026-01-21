@@ -1,25 +1,20 @@
-import React from 'react';
-import Hero from '../components/Hero';
-import ProjectCard from '../components/ProjectCard';
-import ClientCarousel from '../components/ClientCarousel';
-import PartnerCarousel from '../components/PartnerCarousel';
-import { PROJECTS } from '../data/projects';
-import { INDUSTRIES } from '../data/industries';
-import { 
-  Users, HardHat, TrendingUp, Clock, CheckCircle, 
-  Package, Settings, Truck, ShoppingCart, Wind, 
-  Dna, ArrowRight, Droplets, GraduationCap, FlaskConical, ExternalLink 
-} from 'lucide-react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import Hero from "../components/Hero";
+import ProjectCard from "../components/ProjectCard";
+import ClientCarousel from "../components/ClientCarousel";
+import PartnerCarousel from "../components/PartnerCarousel";
+import { PROJECTS } from "../data/projects";
+import { INDUSTRIES } from "../data/industries";
+import {
+  Users, HardHat, TrendingUp, Clock, CheckCircle,
+  Package, Settings, Truck, ShoppingCart, Wind,
+  Dna, ArrowRight, Droplets, GraduationCap, FlaskConical, ExternalLink
+} from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Home: React.FC = () => {
 
-  /* =========================================================
-     HERO SLIDES
-     RULE:
-     - ONLY curated projects
-     - MUST have heroImage
-     ========================================================= */
+  /* ================= HERO SLIDES ================= */
   const heroSlides = PROJECTS
     .filter(
       p =>
@@ -33,24 +28,26 @@ const Home: React.FC = () => {
     .filter(p => p.isFeatured)
     .slice(0, 3);
 
+  /* ================= STATS ================= */
   const stats = [
-    { label: 'Asset Valuation', value: '40+', unit: 'Crore', icon: TrendingUp },
-    { label: 'Technical Team', value: '25+', unit: 'Experts', icon: Users },
-    { label: 'Heritage', value: '13+', unit: 'Years', icon: Clock },
-    { label: 'Compliance', value: '100%', unit: 'Rate', icon: CheckCircle },
+    { label: "Asset Valuation", value: "40+", unit: "Crore", icon: TrendingUp },
+    { label: "Technical Team", value: "25+", unit: "Experts", icon: Users },
+    { label: "Heritage", value: "13+", unit: "Years", icon: Clock },
+    { label: "Compliance", value: "100%", unit: "Rate", icon: CheckCircle },
   ];
 
+  /* ================= ICON MAP ================= */
   const getIcon = (name: string) => {
     switch (name) {
-      case 'Package': return <Package size={32} />;
-      case 'Settings': return <Settings size={32} />;
-      case 'Truck': return <Truck size={32} />;
-      case 'ShoppingCart': return <ShoppingCart size={32} />;
-      case 'Wind': return <Wind size={32} />;
-      case 'Dna': return <Dna size={32} />;
-      case 'Droplets': return <Droplets size={32} />;
-      case 'GraduationCap': return <GraduationCap size={32} />;
-      case 'FlaskConical': return <FlaskConical size={32} />;
+      case "Package": return <Package size={32} />;
+      case "Settings": return <Settings size={32} />;
+      case "Truck": return <Truck size={32} />;
+      case "ShoppingCart": return <ShoppingCart size={32} />;
+      case "Wind": return <Wind size={32} />;
+      case "Dna": return <Dna size={32} />;
+      case "Droplets": return <Droplets size={32} />;
+      case "GraduationCap": return <GraduationCap size={32} />;
+      case "FlaskConical": return <FlaskConical size={32} />;
       default: return <HardHat size={32} />;
     }
   };
@@ -58,24 +55,22 @@ const Home: React.FC = () => {
   return (
     <div className="bg-white pt-16 md:pt-20">
 
-      {/* HERO */}
+      {/* ================= HERO ================= */}
       <Hero slides={heroSlides} />
 
-      {/* TRUST STATS */}
-      <section id="trust-stats" className="bg-blue-900 text-white py-24 relative overflow-hidden border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-12 gap-x-4">
+      {/* ================= TRUST STATS ================= */}
+      <section className="bg-blue-900 text-white py-24 border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-12">
             {stats.map((stat, i) => (
-              <div key={i} className="text-center group md:border-r border-white/10 last:border-0 px-2">
-                <stat.icon className="mx-auto mb-4 w-8 h-8 md:w-10 md:h-10 text-blue-300 opacity-60 group-hover:opacity-100 transition-opacity" />
-                <div className="text-3xl md:text-5xl font-black mb-1 tracking-tighter tabular-nums leading-none">
+              <div key={i} className="text-center">
+                <stat.icon className="mx-auto mb-4 w-8 h-8 text-blue-300 opacity-70" />
+                <div className="text-3xl md:text-5xl font-black mb-1">
                   {stat.value}
                 </div>
-                <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-blue-200 mt-2">
+                <div className="text-[10px] uppercase tracking-widest text-blue-200">
                   {stat.label}
-                  <span className="block font-normal mt-0.5 opacity-40 lowercase tracking-widest">
-                    {stat.unit}
-                  </span>
+                  <div className="opacity-50">{stat.unit}</div>
                 </div>
               </div>
             ))}
@@ -83,189 +78,148 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* ABOUT SUMMARY */}
-      <section className="py-24 md:py-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-center">
-          
-          {/* TEXT */}
-          <div className="order-2 lg:order-1">
-            <div className="text-blue-900 font-bold tracking-[0.5em] uppercase text-[10px] mb-6">
-              Established 2011
-            </div>
-            <h2 className="text-4xl md:text-7xl font-bold text-gray-900 mb-8 leading-tight uppercase tracking-tighter">
-              Technical <br className="hidden md:block" />
-              <span className="text-blue-900 font-black">Contracting.</span>
-            </h2>
-            <div className="space-y-6 text-base md:text-xl text-gray-600 font-light leading-relaxed">
-              <p>
-                Sri Balaji Associates is a premier civil and industrial firm specializing in high-stakes infrastructure.
-              </p>
-              <p>
-                Trusted by <strong>Berger Paints</strong> and <strong>Wipro Enterprises</strong>, we maintain a 100% safety record.
-              </p>
-            </div>
-            <div className="mt-12">
-              <Link
-                to="/about"
-                className="group inline-flex items-center justify-center bg-blue-900 text-white px-10 py-5 font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-black transition-all shadow-2xl"
-              >
-                Capability Profile
-                <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-2 transition-transform" />
-              </Link>
-            </div>
+      {/* ================= ABOUT ================= */}
+      <section className="py-24 max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center">
+
+        <div>
+          <div className="text-blue-900 tracking-[0.4em] text-[10px] uppercase mb-6">
+            Established 2011
           </div>
-
-          {/* IMAGE */}
-          <div className="relative order-1 lg:order-2">
-            <div className="aspect-[4/5] overflow-hidden shadow-2xl border-8 border-white bg-gray-100">
-              <img
-                src="/about/precision.jpg"
-                alt="Precision Construction"
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            <div className="absolute -bottom-12 -right-12 bg-blue-900 p-12 shadow-2xl max-w-sm hidden sm:block">
-              <p className="text-white italic text-xl leading-relaxed mb-4 font-light">
-                "Precision is our fundamental currency."
-              </p>
-              <div className="font-bold text-blue-300 uppercase text-[10px] tracking-[0.4em]">
-                — C. Krishna Kumar
-              </div>
-            </div>
-          </div>
-
+          <h2 className="text-4xl md:text-7xl font-black uppercase mb-8">
+            Technical <br />
+            <span className="text-blue-900">Contracting</span>
+          </h2>
+          <p className="text-gray-600 mb-6">
+            Sri Balaji Associates is a premier civil and industrial firm
+            specializing in high-stakes infrastructure.
+          </p>
+          <p className="text-gray-600 mb-10">
+            Trusted by <b>Berger Paints</b> and <b>Wipro Enterprises</b>, we
+            maintain a 100% safety record.
+          </p>
+          <Link
+            to="/about"
+            className="inline-flex items-center bg-blue-900 text-white px-10 py-5 uppercase text-[10px] tracking-widest"
+          >
+            Capability Profile
+            <ArrowRight className="ml-3 w-4 h-4" />
+          </Link>
         </div>
+
+        <div className="aspect-[4/5] bg-gray-200 overflow-hidden border-8 border-white shadow-xl">
+          <img src="/about/precision.jpg" className="w-full h-full object-cover" />
+        </div>
+
       </section>
 
-      {/* INDUSTRIES */}
-      <section className="py-24 md:py-32 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ================= VERTICALS ================= */}
+      <section className="py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-6">
 
-          <div className="mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between">
+          <div className="mb-20 flex flex-col md:flex-row justify-between">
             <div>
-              <h2 className="text-[10px] font-bold text-blue-900 uppercase tracking-[0.5em] mb-4">
+              <h2 className="text-[10px] uppercase tracking-[0.4em] text-blue-900 mb-4">
                 Operational Sectors
               </h2>
-              <h3 className="text-3xl md:text-6xl font-bold text-gray-900 uppercase tracking-tighter leading-none">
+              <h3 className="text-3xl md:text-6xl font-black uppercase">
                 Specialized Verticals
               </h3>
             </div>
-            <p className="text-gray-500 max-w-sm mt-4 md:mt-0 text-sm font-light">
-              Select a sector below to explore verified constructed assets.
+            <p className="text-gray-500 max-w-sm mt-6 md:mt-0">
+              Select a sector to explore verified constructed assets.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border border-gray-200">
-            {INDUSTRIES.map((industry) => (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 border border-gray-200">
+
+            {INDUSTRIES.map(industry => (
               <Link
                 key={industry.id}
-                to={`/projects?vertical=${encodeURIComponent(industry.title.toUpperCase())}`}
-                className="group relative bg-white p-8 md:p-12 hover:bg-blue-900 transition-all duration-500 overflow-hidden border-b border-gray-100 md:border-r block"
+                to={`/projects?vertical=${encodeURIComponent(industry.title)}`}
+                className="group p-10 bg-white hover:bg-blue-900 transition border-b border-r"
               >
-                <div className="relative z-10">
 
-                  <div className="flex justify-between items-start mb-8">
-                    <div className="w-16 h-16 bg-blue-50 text-blue-900 flex items-center justify-center group-hover:bg-white transition-all rounded-sm">
-                      {getIcon(industry.iconName)}
-                    </div>
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-blue-500 text-white text-[8px] font-bold uppercase tracking-widest px-2 py-1 flex items-center">
-                      Explore <ExternalLink size={10} className="ml-1" />
-                    </div>
+                <div className="mb-8 flex justify-between">
+                  <div className="w-14 h-14 bg-blue-50 text-blue-900 flex items-center justify-center group-hover:bg-white">
+                    {getIcon(industry.iconName)}
                   </div>
-
-                  <h4 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 group-hover:text-white transition-colors uppercase tracking-tight">
-                    {industry.title}
-                  </h4>
-
-                  <p className="text-gray-500 font-light text-xs md:text-sm mb-8 group-hover:text-blue-100 transition-colors">
-                    {industry.description}
-                  </p>
-
-                  <div className="aspect-[16/10] overflow-hidden relative">
-                    <img
-                      src={industry.image}
-                      alt={industry.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-blue-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <span className="text-white text-[10px] font-bold uppercase tracking-widest border border-white/40 px-4 py-2 bg-blue-900/60 backdrop-blur-sm">
-                        View Projects
-                      </span>
-                    </div>
-                  </div>
-
+                  <ExternalLink size={16} className="opacity-0 group-hover:opacity-100 text-white" />
                 </div>
+
+                <h4 className="text-xl font-bold mb-3 group-hover:text-white uppercase">
+                  {industry.title}
+                </h4>
+
+                <p className="text-gray-500 text-sm mb-8 group-hover:text-blue-200">
+                  {industry.description}
+                </p>
+
+                <div className="aspect-[16/10] overflow-hidden">
+                  <img
+                    src={industry.image}
+                    className="w-full h-full object-cover group-hover:scale-110 transition"
+                  />
+                </div>
+
               </Link>
             ))}
-          </div>
 
+          </div>
         </div>
       </section>
 
-      {/* FEATURED PROJECTS */}
-      <section className="py-24 md:py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ================= FEATURED ================= */}
+      <section className="py-24">
+        <div className="max-w-7xl mx-auto px-6">
 
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24">
-            <div>
-              <div className="text-blue-900 font-bold tracking-[0.5em] uppercase text-[10px] mb-4">
-                The Archive
-              </div>
-              <h2 className="text-3xl md:text-6xl font-bold text-gray-900 uppercase tracking-tighter">
-                Portfolio Highlights
-              </h2>
-            </div>
+          <div className="flex justify-between mb-16">
+            <h2 className="text-3xl md:text-6xl font-black uppercase">
+              Portfolio Highlights
+            </h2>
             <Link
               to="/projects"
-              className="mt-6 md:mt-0 bg-blue-900 text-white px-10 py-5 text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-xl"
+              className="bg-blue-900 text-white px-10 py-4 text-[10px] uppercase tracking-widest"
             >
-              View All Assets
+              View All
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-            {featuredProjects.map(project => (
-              <ProjectCard key={project.id} project={project} />
+          <div className="grid md:grid-cols-3 gap-10">
+            {featuredProjects.map(p => (
+              <ProjectCard key={p.id} project={p} />
             ))}
           </div>
 
         </div>
       </section>
 
-      {/* CLIENTS */}
-      <section className="py-24 bg-slate-50 border-t border-slate-100">
-        <ClientCarousel />
-      </section>
+      {/* ================= CLIENTS ================= */}
+      <ClientCarousel />
 
-      {/* PARTNERS */}
-      <section className="py-24 bg-white border-t border-slate-100">
-        <PartnerCarousel />
-      </section>
+      {/* ================= PARTNERS ================= */}
+      <PartnerCarousel />
 
-      {/* CONTACT CTA */}
-      <section className="py-32 md:py-48 bg-blue-900 text-white text-center relative overflow-hidden">
-        <div className="max-w-4xl mx-auto px-4 relative z-10">
-          <h2 className="text-4xl md:text-8xl font-black mb-8 uppercase tracking-tighter leading-none">
-            Build <br className="md:hidden" /> Greatness.
-          </h2>
-          <p className="text-lg md:text-2xl text-blue-200 mb-12 font-light opacity-80 max-w-2xl mx-auto">
-            Commission a technical consultation for your next industrial infrastructure asset.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
-            <Link
-              to="/contact"
-              className="w-full sm:w-auto bg-white text-blue-900 px-12 py-5 font-bold uppercase tracking-widest text-[10px] hover:bg-blue-50 transition-all shadow-2xl"
-            >
-              Initiate Inquiry
-            </Link>
-            <Link
-              to="/about"
-              className="w-full sm:w-auto border border-white/40 text-white px-12 py-5 font-bold uppercase tracking-widest text-[10px] hover:bg-white/10 transition-all backdrop-blur-md"
-            >
-              Learn Methodology
-            </Link>
-          </div>
+      {/* ================= CTA ================= */}
+      <section className="py-32 bg-blue-900 text-white text-center">
+        <h2 className="text-5xl md:text-8xl font-black uppercase mb-10">
+          Build Greatness
+        </h2>
+        <p className="text-blue-200 mb-10 max-w-2xl mx-auto">
+          Commission a technical consultation for your next industrial asset.
+        </p>
+        <div className="flex justify-center gap-6">
+          <Link
+            to="/contact"
+            className="bg-white text-blue-900 px-12 py-5 uppercase text-[10px] tracking-widest"
+          >
+            Initiate Inquiry
+          </Link>
+          <Link
+            to="/about"
+            className="border border-white px-12 py-5 uppercase text-[10px] tracking-widest"
+          >
+            Learn Methodology
+          </Link>
         </div>
       </section>
 
