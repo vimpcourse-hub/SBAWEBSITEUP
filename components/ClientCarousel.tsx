@@ -37,34 +37,41 @@ const ClientCarousel = () => {
               className="mx-4 w-[260px] h-44 flex flex-col items-center justify-center bg-gray-50 border border-gray-100 hover:border-blue-900 hover:bg-white transition-all duration-500 shadow-sm hover:shadow-xl px-6 text-center"
             >
 
-              {/* LOGO OR TEXT */}
+              {/* CONTENT */}
               {e.file ? (
-                <img
-                  src={`/images/entities/${e.file}`}
-                  onError={(ev) => {
-                    // fallback to text if image missing
-                    (ev.target as HTMLImageElement).style.display = "none";
-                  }}
-                  className="max-h-14 object-contain mb-3"
-                  alt={e.name}
-                  loading="lazy"
-                />
+                <>
+                  <img
+                    src={`/images/entities/${e.file}`}
+                    onError={(ev) => {
+                      (ev.target as HTMLImageElement).style.display = "none";
+                    }}
+                    className="max-h-14 object-contain mb-3"
+                    alt={e.name}
+                    loading="lazy"
+                  />
+
+                  <div className="text-[11px] font-bold uppercase tracking-wide text-gray-900">
+                    {e.name}
+                  </div>
+
+                  {e.subtitle && (
+                    <div className="text-[10px] font-bold uppercase tracking-widest text-blue-900 mt-1">
+                      {e.subtitle}
+                    </div>
+                  )}
+                </>
               ) : (
-                <div className="text-sm font-bold uppercase mb-2">
-                  {e.name}
-                </div>
-              )}
+                <>
+                  <div className="text-sm font-bold uppercase text-gray-900 mb-1">
+                    {e.name}
+                  </div>
 
-              {/* NAME */}
-              <div className="text-[11px] font-bold uppercase tracking-wide text-gray-900">
-                {e.name}
-              </div>
-
-              {/* SUBTITLE */}
-              {e.subtitle && (
-                <div className="text-[10px] font-bold uppercase tracking-widest text-blue-900 mt-1">
-                  {e.subtitle}
-                </div>
+                  {e.subtitle && (
+                    <div className="text-[10px] font-bold uppercase tracking-widest text-blue-900">
+                      {e.subtitle}
+                    </div>
+                  )}
+                </>
               )}
 
             </Link>
