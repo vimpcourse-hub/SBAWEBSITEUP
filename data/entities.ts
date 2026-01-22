@@ -16,17 +16,17 @@ export const ENTITIES: EntityItem[] = [
 
   { key: "BERGER", name: "Berger Paints Limited", type: "client", file: "berger.png" },
 
-  { key: "WIPRO", name: "Wipro Enterprises Limited", type: "client", isTextOnly: true },
+  { key: "WIPRO", name: "Wipro Enterprises Limited", type: "client", file: "wipro.png" },
 
   { key: "BRITISH_PAINTS", name: "British Paints", type: "client", file: "british-paints.png" },
 
-  { key: "JOYALUKKAS", name: "Joyalukkas Foundation", type: "client", isTextOnly: true },
+  { key: "JOYALUKKAS", name: "Joyalukkas Foundation", type: "client", file: "joyalukkas.png" },
 
-  { key: "SUZLON", name: "Suzlon Infrastructure Limited", type: "client", isTextOnly: true },
+  { key: "SUZLON", name: "Suzlon Infrastructure Limited", type: "client", file: "suzlon.png" },
 
   { key: "BHORUKA", name: "Bhoruka Power Corporation", type: "client", file: "bhoruka.jpg" },
 
-  { key: "TIRUPATI", name: "Tirupati Steels", type: "client", isTextOnly: true },
+  { key: "TIRUPATI", name: "Tirupati Steels", type: "client", file: "tirupati-steels.png" },
 
   { key: "MB_SMELTERS", name: "M.B. Smelters", type: "client", isTextOnly: true },
 
@@ -40,7 +40,7 @@ export const ENTITIES: EntityItem[] = [
 
   { key: "PWD_KA", name: "Public Works Department", type: "authority", parent: "GOVT_KA", isTextOnly: true, subtitle: "Govt of Karnataka" },
 
-  { key: "KIADB", name: "KIADB", type: "authority", parent: "GOVT_KA", isTextOnly: true, subtitle: "Govt of Karnataka" },
+  { key: "KIADB", name: "KIADB", type: "authority", parent: "GOVT_KA", file: "kiadb.png", subtitle: "Govt of Karnataka" },
 
   { key: "HOSPET_MC", name: "Hospet Municipal Council", type: "authority", parent: "GOVT_KA", isTextOnly: true, subtitle: "Govt of Karnataka" },
 
@@ -62,11 +62,12 @@ export const ENTITIES: EntityItem[] = [
 
   /* ===== PARTNERS ===== */
 
-  { key: "NSL", name: "NSL Constructions Pvt Ltd", type: "partner", isTextOnly: true },
+  { key: "NSL", name: "NSL Constructions Pvt Ltd", type: "partner", file: "nsl.png" },
 
   { key: "IVRCL", name: "IVRCL", type: "partner", file: "ivrcl.png" },
 
   { key: "GVPR", name: "GVPR Engineers Ltd", type: "partner", file: "gvpr.png" },
 
-  { key: "LNT", name: "Larsen & Toubro", type: "partner", isTextOnly: true },
+  { key: "LNT", name: "Larsen & Toubro", type: "partner", file: "lnt.png" },
+
 ];
