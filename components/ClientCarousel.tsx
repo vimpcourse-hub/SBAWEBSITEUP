@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import type { EntityItem } from "../types";
 
 const ClientCarousel = () => {
-  // Only clients + authorities
+  // Clients + Authorities + Partners
   const items: EntityItem[] = ENTITIES.filter(
-    (e): e is EntityItem => e.type === "client" || e.type === "authority"
+    (e): e is EntityItem =>
+      e.type === "client" || e.type === "authority" || e.type === "partner"
   );
 
   return (
@@ -15,14 +16,14 @@ const ClientCarousel = () => {
       <div className="max-w-7xl mx-auto px-6 mb-14 flex flex-col md:flex-row md:items-end justify-between">
         <div>
           <h2 className="text-xs font-bold text-blue-900 uppercase tracking-[0.3em] mb-4">
-            Clients & Government Authorities
+            Clients, Government & Partners
           </h2>
           <h3 className="text-4xl font-bold text-gray-900 uppercase tracking-tighter">
             Trusted by Industry & Public Institutions
           </h3>
         </div>
         <p className="text-gray-500 text-sm max-w-md mt-4 md:mt-0 font-light">
-          Corporate leaders and state infrastructure departments across India.
+          Corporate leaders, infrastructure authorities and strategic partners across India.
         </p>
       </div>
 
@@ -34,7 +35,7 @@ const ClientCarousel = () => {
             <Link
               key={`${e.key}-${i}`}
               to={`/projects?entity=${e.key}`}
-              className="mx-4 w-[260px] h-44 flex flex-col items-center justify-center bg-gray-50 border border-gray-100 hover:border-blue-900 hover:bg-white transition-all duration-500 shadow-sm hover:shadow-xl px-6 text-center"
+              className="mx-4 w-[260px] h-48 flex flex-col items-center justify-center bg-gray-50 border border-gray-100 hover:border-blue-900 hover:bg-white transition-all duration-500 shadow-sm hover:shadow-xl px-6 text-center"
             >
 
               {/* CONTENT */}
@@ -50,24 +51,26 @@ const ClientCarousel = () => {
                     loading="lazy"
                   />
 
-                  <div className="text-[11px] font-bold uppercase tracking-wide text-gray-900">
+                  {/* NAME ALWAYS SHOWN */}
+                  <div className="text-[11px] font-bold uppercase tracking-wide text-gray-900 leading-snug">
                     {e.name}
                   </div>
 
                   {e.subtitle && (
-                    <div className="text-[10px] font-bold uppercase tracking-widest text-blue-900 mt-1">
+                    <div className="text-[10px] font-semibold uppercase tracking-widest text-blue-900 mt-1">
                       {e.subtitle}
                     </div>
                   )}
                 </>
               ) : (
                 <>
-                  <div className="text-sm font-bold uppercase text-gray-900 mb-1">
+                  {/* TEXT-ONLY CARDS */}
+                  <div className="text-[13px] font-bold uppercase text-gray-900 leading-snug mb-2">
                     {e.name}
                   </div>
 
                   {e.subtitle && (
-                    <div className="text-[10px] font-bold uppercase tracking-widest text-blue-900">
+                    <div className="text-[11px] font-semibold uppercase tracking-widest text-blue-900">
                       {e.subtitle}
                     </div>
                   )}
