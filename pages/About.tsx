@@ -63,7 +63,7 @@ const About: React.FC = () => {
             <div className="relative">
               <div className="absolute -top-10 -left-10 w-32 h-32 bg-blue-50 -z-10"></div>
               <div className="aspect-[3/4] overflow-hidden shadow-2xl border-8 border-white grayscale hover:grayscale-0 transition-all duration-1000">
-                <img src="https://picsum.photos/id/64/600/800" alt="Mr. C. Krishna Kumar" className="w-full h-full object-cover" />
+                <img src=".com" alt="Mr. C. Krishna Kumar" className="w-full h-full object-cover" />
               </div>
               <div className="absolute -bottom-10 -right-10 bg-blue-900 p-8 text-white shadow-2xl hidden md:block">
                  <div className="text-2xl font-serif italic mb-2">C. Krishna Kumar</div>
