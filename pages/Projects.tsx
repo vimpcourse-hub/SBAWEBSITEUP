@@ -178,7 +178,6 @@ const Projects: React.FC = () => {
     setSelectedEntity(e.target.value); // ✅ ONLY change entity
   }}
   className="w-full border border-gray-200 px-4 py-3 text-sm bg-white"
->
 
             >
               {allEntities.map(k => {
