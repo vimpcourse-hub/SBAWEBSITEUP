@@ -172,14 +172,14 @@ const Projects: React.FC = () => {
             <div className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2">
               Client / Authority / Partner
             </div>
-            <select
-              value={selectedEntity}
-              onChange={e => {
-                setSelectedEntity(e.target.value);
-                setSelectedVertical("ALL");
-                setSelectedCategory("ALL");
-              }}
-              className="w-full border border-gray-200 px-4 py-3 text-sm bg-white"
+        <select
+  value={selectedEntity}
+  onChange={e => {
+    setSelectedEntity(e.target.value); // ✅ ONLY change entity
+  }}
+  className="w-full border border-gray-200 px-4 py-3 text-sm bg-white"
+>
+
             >
               {allEntities.map(k => {
                 const label =
