@@ -1,10 +1,9 @@
 import { ENTITIES } from "../data/entities";
 import { Link } from "react-router-dom";
-import type { EntityItem } from "../types";   // ✅ IMPORTANT
+import type { EntityItem } from "../types";
 
 const ClientCarousel = () => {
-
-  // ✅ force correct typing so TS knows about `subtitle`
+  // Only clients + authorities
   const items: EntityItem[] = ENTITIES.filter(
     (e): e is EntityItem => e.type === "client" || e.type === "authority"
   );
@@ -38,12 +37,17 @@ const ClientCarousel = () => {
               className="mx-4 w-[260px] h-44 flex flex-col items-center justify-center bg-gray-50 border border-gray-100 hover:border-blue-900 hover:bg-white transition-all duration-500 shadow-sm hover:shadow-xl px-6 text-center"
             >
 
-              {/* LOGO / TEXT */}
-              {e.file && !e.isTextOnly ? (
+              {/* LOGO OR TEXT */}
+              {e.file ? (
                 <img
                   src={`/images/entities/${e.file}`}
+                  onError={(ev) => {
+                    // fallback to text if image missing
+                    (ev.target as HTMLImageElement).style.display = "none";
+                  }}
                   className="max-h-14 object-contain mb-3"
                   alt={e.name}
+                  loading="lazy"
                 />
               ) : (
                 <div className="text-sm font-bold uppercase mb-2">
@@ -76,7 +80,7 @@ const ClientCarousel = () => {
           100% { transform: translateX(-50%); }
         }
         .animate-scroll-clients {
-          animation: scroll-clients 45s linear infinite;
+          animation: scroll-clients 90s linear infinite;
         }
         .animate-scroll-clients:hover {
           animation-play-state: paused;
